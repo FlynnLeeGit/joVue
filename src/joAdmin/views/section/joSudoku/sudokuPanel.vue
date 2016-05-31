@@ -6,19 +6,15 @@
       </div>
       <div class="modal-body row" slot="modal-body">
         <!-- square desc -->
-        <!-- <p></p>{{serCateList|json}}
-<p></p>{{serInfoList|json}}
- -->
-        <p></p>{{sudokuData|json}}
-        <p>{{singleSerInfo|json}}</p>
+        <!-- <p></p>{{sudokuData|json}} -->
         <div class="col-sm-6">
           <jo-input label="服务" sm="12">
-            <select v-model='sudokuData.serId' class="form-control">
-              <option :value='ser.serId' v-for='ser in serInfoList'>{{ser.serName}}</option>
+            <select @change='bindSer($event)' v-model='sudokuData.serName' class="form-control">
+              <option v-for='ser in serInfoList'>{{ser.serName}}</option>
             </select>
           </jo-input>
           <jo-input label='分类' sm='8'>
-            <input type="text" class="form-control" v-model='sudokuData.serCategory' disabled>
+            <input type="text" class="form-control" v-model='sudokuData.serCategory' placeholder="自动匹配" disabled>
           </jo-input>
           <jo-input label='介绍' sm='12'>
             <textarea v-model='sudokuData.serDesc' rows="5" class="form-control"></textarea>
@@ -38,8 +34,12 @@
           </jo-input>
         </div>
         <div class="col-sm-6">
-          <jo-single-img label='图标' :server='uploadServer' :img='sudokuData.serIcon'></jo-single-img>
-          <jo-single-img label='图片' :server='uploadServer' :img='sudokuData.serImg'></jo-single-img>
+          <div class="col-xs-12">
+            <jo-single-img label='图标' :server='uploadServer' :img.sync='sudokuData.serIcon'></jo-single-img>
+          </div>
+          <div class="col-xs-12">
+            <jo-single-img label='图片' :img.sync='sudokuData.serImg'></jo-single-img>
+          </div>
         </div>
       </div>
     </modal>
@@ -54,7 +54,9 @@ import {
 } from 'jo'
 
 import {
+  cardService,
   vipService,
+  sudokuService
 } from 'api'
 export default {
   props: ['show', 'mode', 'refreshList', 'selectedId'],
@@ -70,7 +72,6 @@ export default {
       sudokuData: {
         serMark: 'NEW'
       },
-      uploadServer: `${window.server}/qiniu/upload/0`
     }
   },
   computed: {
@@ -88,33 +89,39 @@ export default {
       this.$root.$emit('showAlert', msg)
     },
     confirm() {
-
+      if (this.isAdd) sudokuService.insertSudoku(this.sudokuData)
+        .then(res => this.updateList('插入九宫格服务成功!'))
+      if (this.isEdit) sudokuService.updateSudoku(this.sudokuData)
+        .then(res => this.updateList('更新九宫格服务成功!'))
     },
-  },
-  asyncData(resolve, reject) {
-    vipService.getSerInfos()
-      .then(serInfoList => {
-        resolve({
-          serInfoList
-        })
+    bindSer(e) {
+      let newSerName = e.target.value
+      this.serInfoList.forEach((ser) => {
+        if (newSerName === ser.serName) this.$set('sudokuData.serId', ser.serId)
       })
-  },
-  watch: {
-    'sudokuData.serId' (newSerId) {
-      vipService.getOneSerInfo(newSerId)
+      vipService.getOneSerInfo(this.sudokuData.serId)
         .then(({
-          serName,
           serCategory,
           serNo
         }) => {
           this.sudokuData = Object.assign({}, this.sudokuData, {
-            serName,
             serCategory,
             serNo
           })
         })
+
     }
-  }
+  },
+  asyncData(resolve, reject) {
+    cardService.getSerInfos()
+      .then(serInfoList => resolve({
+        serInfoList
+      }))
+    if (this.isEdit) sudokuService.getOneSudoku(this.selectedId)
+      .then(sudokuData => resolve({
+        sudokuData
+      }))
+  },
 }
 </script>
 <style scoped>

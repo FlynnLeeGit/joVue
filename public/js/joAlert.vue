@@ -22,7 +22,7 @@ export default {
     },
     closeTime: {
       type: Number,
-      default: 1000
+      default: 2000
     }
   },
   watch: {

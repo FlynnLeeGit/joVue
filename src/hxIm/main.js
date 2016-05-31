@@ -4,12 +4,11 @@ import VueAsyncData from 'vue-async-data'
 import VueRouter from 'vue-router'
 // 组件引入
 import userLogin from './views/login/userLogin'
-
+import admin from './views/admin'
+import adminChat from './views/admin/adminChat'
 // 过滤器
 import './filters/filters'
-
-//网站图标
-import './favicon.ico'
+import 'public/css/MaterialIcons.css'
 
 Vue.use(VueAsyncData)
 Vue.use(VueRouter)
@@ -21,11 +20,23 @@ router.map({ // 路由数
     name: 'userLogin',
     component: userLogin
   },
+  '/admin': {
+    name: 'admin',
+    component: admin,
+    subRoutes: {
+      '/': {
+        name: 'adminChat',
+        component: adminChat,
+        auth: false,
+      }
+    }
+  }
 })
 router.beforeEach(() => {
-  window.scrollTo(0, 0)
+
+
 })
 router.redirect({
-  '*': '/userLogin'
+  '*': '/admin'
 })
 router.start(App, '#app')

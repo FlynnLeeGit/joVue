@@ -6,15 +6,18 @@
       </div>
       <div class="modal-body row" slot="modal-body">
         {{editData|json}}
+        <jo-input label='活动名称' sm='8'>
+          <input v-model='editData.acName' type="text" class="form-control" ph='活动名称' required>
+        </jo-input>
         <jo-input label="宣传时间范围" sm='12'>
-          <jo-datetime :value.sync='editData.pubStart' ph='开始'></jo-datetime>
-          <jo-datetime :value.sync='editData.pubEnd' ph='结束'></jo-datetime>
+          <jo-datetime :value.sync='editData.startTime' ph='开始'></jo-datetime>
+          <jo-datetime :value.sync='editData.endTime' ph='结束'></jo-datetime>
         </jo-input>
         <jo-input label="询问语" sm='6'>
-          <textarea class="form-control" rows="5" v-model="editData.pubIntro"></textarea>
+          <textarea class="form-control" rows="5" v-model="editData.acAsk"></textarea>
         </jo-input>
         <div class="col-sm-6">
-          <jo-single-img :img.sync='editData.pubImg' :server='requestServer'></jo-single-img>
+          <jo-single-img :img.sync='editData.acImg'></jo-single-img>
         </div>
       </div>
     </modal>
@@ -28,9 +31,8 @@ import {
   joDatetime,
   joSingleImg
 } from 'jo'
-const server = window.server
 import {
-  vipService
+  activityService
 } from 'api'
 export default {
   props: {
@@ -43,9 +45,9 @@ export default {
     },
     id: String,
     reloadList: {
-      type: Number,
-      twoWay: true
-    },
+      twoWay: true,
+      type: Number
+    }
   },
   components: {
     modal,
@@ -58,7 +60,6 @@ export default {
     return {
       editData: {},
       memberOpts: [],
-      requestServer: `${server}/qiniu/upload/0`,
     }
   },
   computed: {
@@ -70,25 +71,21 @@ export default {
     }
   },
   methods: {
+    confirm() {
+      if (this.isAdd) activityService.insertActivity(this.editData)
+        .then(res => this.updateList('新增宣传活动成功!'))
+      if (this.isEdit) activityService.updateActivity(this.editData)
+        .then(res => this.updateList('更新宣城活动成功!'))
+    },
     updateList(msg) {
       this.show = false
       this.reloadList += 1
       this.$root.$emit('showAlert', msg)
-    },
-    confirm() {
-      if (this.isAdd) vipService.insertPartner(this.editData)
-        .then(res => this.updateList('新增宣传活动成功!'))
-
-      if (this.isEdit) vipService.updatePartner(this.editData)
-        .then(res => this.updateList('更新宣城活动成功!'))
     }
   },
   asyncData(resolve, reject) {
-    vipService.getVips()
-      .then(list => resolve({
-        memberOpts: list.map(val => val.memberMoney)
-      }))
-    if (this.isEdit) vipService.getOnePartner(this.id)
+    if (this.isAdd) resolve()
+    if (this.isEdit) activityService.getOneActivity(this.id)
       .then(editData => resolve({
         editData
       }))

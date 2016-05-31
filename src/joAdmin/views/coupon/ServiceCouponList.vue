@@ -18,12 +18,12 @@ import {
 import {
   couponTableOpts
 } from './couponOpts'
-import coupPanel from './coupPanel'
+
 
 export default {
   components: {
     joTable,
-    coupPanel
+
   },
   data() {
     return {

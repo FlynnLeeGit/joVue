@@ -19,3 +19,8 @@ export const orderByChs = (arr, sortKey, reverse = 1) => {
     return a[sortKey].toString().localeCompare(b[sortKey].toString()) * reverse
   })
 }
+export const orderTypeToString = orderType => {
+  if (orderType === '不等位') return '1'
+  if (orderType === '代排队') return '2'
+  return orderType
+}

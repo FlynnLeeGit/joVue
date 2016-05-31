@@ -1,4 +1,4 @@
-const isEmpty = (val) => {
+module.exports = function(val) {
   if (val instanceof Array) {
     return val.length === 0
   }
@@ -10,5 +10,3 @@ const isEmpty = (val) => {
   }
   return false
 }
-
-export default isEmpty

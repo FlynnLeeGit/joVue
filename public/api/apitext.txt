@@ -1,137 +1,30 @@
-const accountServer = `${window.server}/account`
-const accountService = {
-  /** [getAccounts 获取所有用户 可以传参查询] */
-  getAccounts(searchObj) {
-    return joFetch.post(`${accountServer}/list`, searchObj)
-      .then(res => res.list)
-  },
+import server from 'server'
+const sudokuServer = `${server}/sudoku`
+
+import { joFetch } from 'jo'
+export default {
+  /** [getSudokus 获取所有九宫格服务] */
+  getSudokus() {
+      return joFetch.post(`${sudokuServer}/ser/select`)
+        .then(res => res.list)
+    },
+    /** [insertSudoku 插入九宫格服务] */
+    insertSudoku(sudokuJson) {
+      return joFetch.post(`${sudokuServer}/ser/insert`, { sudoku: JSON.stringify(sudokuJson) })
+
+    },
+    /** [getOneSudoku 获取单个九宫格服务] */
+    getOneSudoku(sudokuId) {
+      return joFetch.post(`${sudokuServer}/ser/selectOne`, { sudokuId })
+        .then(res => JSON.parse(res.Sudoku))
+
+    },
+    /** [deleteSudoku 删除九宫格服务] */
+    deleteSudoku(sudokuId) {
+      return joFetch.delete(`${sudokuServer}/ser/delete`, { sudokuId })
+    },
+    /** [updateSudoku 更新九宫格服务] */
+    updateSudoku(sudokuJson) {
+      return joFetch.post(`${sudokuServer}/ser/update`, { sudoku: JSON.stringify(sudokuJson) })
+    }
 }
-
-const cardServer = `${window.server}/card`
-const cardService = {
-  /** [getTemplates 获取所有模板] */
-  getTemplates() {
-    return joFetch.get(`${cardServer}/all/template`)
-      .then(res => res.list)
-  },
-  /** [deleteTemplate 删除特定模板] */
-  deleteTemplate(templateId) {
-    return joFetch.post(`${cardServer}/delete/${templateId}/template`)
-  },
-  /** [insertTemplate 新建支付模板] */
-  insertTemplate(templateJson) {
-    return joFetch.post(`${cardServer}/template`, { template: JSON.stringify(templateJson) })
-  },
-  /** [updateTemplate 更新支付模板] */
-  updateTemplate(templateJson) {
-    return joFetch.post(`${cardServer}/update/template`, { template: JSON.stringify(templateJson) })
-  },
-
-  /**======*/
-  /** [getSerInfos 新建卡片模板从服务中拉取选项] */
-  getSerInfos() {
-    return joFetch.post(`${cardServer}/ser/select`)
-      .then(res => res.list)
-  },
-  /** [createCard 生成支付卡片] */
-  createCard(cardJson) {
-    return joFetch.post(`${cardServer}/tocard`, { card: JSON.stringify(cardJson) })
-  }
-}
-
-
-const imServer = `${window.server}/im`
-const imService = {
-  /** [getAccount im后台中根据visitorImId(其实就是mobile和orderPhone手机号) 获得用户信息和订单信息] */
-  getAccount(visitorImId) {
-    return joFetch.post(`${imServer}/crm`, { visitorImId })
-      .then(res => res.hxInfoDto)
-  }
-}
-
-const lifeServer = `${window.server}/life`
-const lifeService = {
-  /** [getAllLifes 获取所有生活商家] */
-  getAllLifes() {
-    return joFetch.post(`${lifeServer}/select`)
-      .then(res => res.list)
-  },
-  /** [updateLife 更新生活服务] */
-  updateLife(lifeJson) {
-    return joFetch.post(`${lifeServer}/update`, { life: JSON.stringify(lifeJson) })
-  },
-  /** [insertLife 插入生活服务] */
-  insertLife(lifeJson) {
-    return joFetch.post(`${lifeServer}/insert`, { life: JSON.stringify(lifeJson) })
-  },
-  /** [getOneLife 获取单个服务] */
-  getOneLife(lifeId) {
-    return joFetch.post(`${lifeServer}/selectOne`, { lifeId })
-      .then(res => JSON.parse(res.life))
-  }
-
-}
-
-const orderServer = `${window.server}/order`
-const orderService = {
-  /** [订单查询 可包含查询参数] */
-  getOrders(searchObj) {
-    return joFetch.post(`${orderServer}/list`, searchObj)
-      .then(res => res.list)
-  },
-  /** [getOrderDetail 获得自定义订单详情] */
-  getOrderDetail(orderId) {
-    return joFetch.post(`${orderServer}/detail`, { orderId })
-      .then(res => JSON.parse(res.cardjson))
-  },
-
-  /** [修改订单状态] */
-  updateDeal(orderId) {
-    return joFetch.post(`${orderServer}/deal/status`, { orderId })
-  },
-  updateStatus(orderId, orderStatus) {
-    return joFetch.post(`${orderServer}/status`, { orderId, orderStatus })
-  }
-}
-
-const restServer = `${window.server}/restaurant`
-const restService = {
-  /** [getRests 自定义餐厅字段中的餐厅列表] */
-  getRests() {
-    return joFetch.post(`${restServer}`)
-  }
-}
-
-const couponServer = `${window.server}/v2/coupon`
-const v2CouponService = {
-  getAllCoupons() {
-    return joFetch.post(`${couponServer}/select`)
-      .then(res => res.list)
-  },
-  insertLifeCoupon(coupJson, couponNum) {
-    return joFetch.post(`${couponServer}/insert/life`, { lifeCoupon: JSON.stringify(coupJson), couponNum })
-  },
-  insertRestCoupon(coupJson, couponNum) {
-    return joFetch.post(`${couponServer}/insert/rest`, { restCoupon: JSON.stringify(coupJson), couponNum })
-  },
-}
-
-const v2RestServer = `${window.server}/v2/restaurant`
-const v2RestService = {
-  getRests() {
-    return joFetch.post(`${v2RestServer}/select`)
-      .then(res => res.list)
-  },
-  insertRest(restJson) {
-    return joFetch.post(`${v2RestServer}/insert`, { rest: JSON.stringify(restJson) })
-  },
-  getOneRest(restId) {
-    return joFetch.post(`${v2RestServer}/selectOne`, { restId })
-      .then(res => JSON.parse(res.rest))
-  },
-  updateRest(restJson) {
-    return joFetch.post(`${v2RestServer}/update`, { rest: JSON.stringify(restJson) })
-  },
-}
-
-

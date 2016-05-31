@@ -23,4 +23,10 @@ export default {
       require([`../views/section/joSudoku/SudokuList`], resolve)
     }
   },
+  '/ActivityList': {
+    name: 'ActivityList',
+    component: resolve => {
+      require(['../views/section/joActivity/ActivityList'], resolve)
+    }
+  },
 }

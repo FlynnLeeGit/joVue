@@ -18,6 +18,7 @@ export default {
   props: {
     str: {
       required: true,
+      twoWay: true
     },
     splitKey: {
       type: String,

@@ -1,6 +1,6 @@
 <template>
   <div>
- <!-- <p>{{strArr|json}}</p>
+    <!-- <p>{{strArr|json}}</p>
 <p>{{fieldsArr}}</p>
 <p>字符串 {{str}}</p>
  -->
@@ -14,7 +14,8 @@ import joInput from './joInput'
 export default {
   props: {
     str: {
-      required: true
+      required: true,
+      twoWay: true
     },
     splitKey: {
       type: String,

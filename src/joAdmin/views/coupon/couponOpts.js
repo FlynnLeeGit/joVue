@@ -1,4 +1,4 @@
-const couponTableOpts = {
+export const couponTableOpts = {
   columns: [
     { th: '编号', field: 'id' },
     { th: '供应商', field: 'partnerName' },
@@ -21,7 +21,7 @@ const convertChange = (val) => {
     return `<button class='btn btn-xs' data-type='bind'>未绑定会员</button>`
   }
 }
-const businessCouponTableOpts = {
+export const businessCouponTableOpts = {
   nowrap: true,
   columns: [
     { th: '绑定状态切换', field: 'isBind', convert: convertChange },
@@ -33,7 +33,17 @@ const businessCouponTableOpts = {
     { th: '使用须知', field: 'notice' },
   ]
 }
-export {
-  couponTableOpts,
-  businessCouponTableOpts
+
+export const memberCouponTableOpts = {
+  nowrap: true,
+  columns: [
+    { th: '编号', field: 'no' },
+    { th: '供应商', field: '' },
+    { th: '会员码', field: '' },
+    { th: '会员类别', field: 'memberLevel' },
+    { th: '时限', field: '' },
+    { th: '兑换截止日期', field: '' },
+    { th: '是否已兑换', field: '' },
+    { th: '生成时间', field: '' },
+  ]
 }

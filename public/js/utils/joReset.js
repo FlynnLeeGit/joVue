@@ -6,7 +6,8 @@ const has = (arr, ele) => {
     return false
   }
   /** [对象空化 keepArr为保留的字段数组] */
-const joReset = (OriObj, keepArr = []) => {
+
+module.exports = function(OriObj, keepArr = []) {
   let obj = JSON.parse(JSON.stringify(OriObj))
 
   function reset(sth) {
@@ -22,4 +23,3 @@ const joReset = (OriObj, keepArr = []) => {
   reset(obj)
   return obj
 }
-export default joReset

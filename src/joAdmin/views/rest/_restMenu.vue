@@ -8,7 +8,7 @@
           <jo-multi-str :str.sync='c.content' split-key='@' fields="菜品名称@菜品描述"></jo-multi-str>
         </div>
         <div class="col-xs-6">
-          <jo-single-img :server="requestServer" :img.sync="c.imgUrl"></jo-single-img>
+          <jo-single-img :img.sync="c.imgUrl"></jo-single-img>
         </div>
       </div>
     </div>
@@ -30,11 +30,6 @@ export default {
     joInput,
     joMultiStr,
     joSingleImg
-  },
-  data() {
-    return {
-      requestServer: `${server}/qiniu/upload/0`,
-    }
   },
   methods: {
     addItem() {

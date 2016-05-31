@@ -10,15 +10,13 @@
           <jo-input label="价格" xs="12">
             <input type="number" v-model='subject.orderMoney' class="form-control" :disabled="isTemplate">
           </jo-input>
-           <jo-input label="商品费(原价)" xs="12">
+          <jo-input label="商品费(原价)" xs="12">
             <input type="number" v-model='subject.serOriginal' class="form-control" :disabled="isTemplate">
           </jo-input>
-
-           <jo-input label="服务费(原价)" xs="12">
+          <jo-input label="服务费(原价)" xs="12">
             <input type="number" v-model='subject.chargeOriginal' class="form-control" :disabled="isTemplate">
           </jo-input>
-
-           <jo-input label="特权价格" xs="12">
+          <jo-input label="特权价格" xs="12">
             <input type="number" v-model='subject.serPrice' class="form-control" :disabled="isTemplate" :value='privilegeData?privilegeData.serPrice:0'>
           </jo-input>
           <jo-input label="特权服务费" xs="12">
@@ -35,8 +33,8 @@
               <card-info :info.sync='info' :mode='mode'></card-info>
             </div>
             <div class="col-xs-4" v-if="isTemplate">
-              <button class="btn btn-default btn-xs" @click="swapItem(subject.cardInfo,$index,$index+1)"><i class="fa fa-arrow-up"></i></button>
-              <button class="btn btn-default btn-xs" @click="swapItem(subject.cardInfo,$index,$index-1)"><i class="fa fa-arrow-down"></i></button>
+              <button class="btn btn-default btn-xs" @click="swapItem(subject.cardInfo,$index,$index-1)"><i class="fa fa-arrow-up"></i></button>
+              <button class="btn btn-default btn-xs" @click="swapItem(subject.cardInfo,$index,$index+1)"><i class="fa fa-arrow-down"></i></button>
               <button class="btn btn-primary btn-xs" @click="subject.otherInfo.push(subject.cardInfo.splice($index, 1)[0])">切换显示</button>
               <button class="btn btn-danger btn-xs" @click="del($index,subject.cardInfo)">删除</button>
             </div>
@@ -75,7 +73,6 @@
       </div>
       <slot v-if='isTemplate' name='delBtn'></slot>
     </div>
-
     <div class="col-xs-3">
       <h4>会员特权信息</h4>
       <div v-if='privilegeData'>
@@ -86,8 +83,6 @@
         <p><span class="text-primary">是否免费:</span>{{privilegeData.isFree}}</p>
       </div>
       <p v-else>查询不到 请检查是否传入accountId 和 serId</p>
-      <p> {{privilegeData|json}}</p>
-      <p>{{subject|json}}</p>
     </div>
   </div>
 </template>
@@ -98,18 +93,18 @@ import {
   joSplit,
   joReset,
 } from 'jo'
-import cardInfo from './cardInfo'
-
+log(joReset)
 import {
   cardService,
   vipService
 } from 'api'
+
 export default {
-  props: ['subject', 'mode', 'refreshList','privilegeData'],
+  props: ['subject', 'mode', 'refreshList', 'privilegeData'],
   components: {
     joInput,
     joPanel,
-    cardInfo,
+    cardInfo: require('./cardInfo')
   },
   data() {
     return {
@@ -153,7 +148,7 @@ export default {
       if (index2 < infoArr.length && index2 >= 0) infoArr[index1] = infoArr.splice(index2, 1, infoArr[index1])[0]
     },
     resetTpl() {
-      return joReset(this.subject, ['subject', 'key', 'serId', 'templateId','type','serPrice','serCharge','serOriginal','chargeOriginal'])
+      return joReset(this.subject, ['subject', 'key', 'serId', 'templateId', 'type', 'serPrice', 'serCharge', 'serOriginal', 'chargeOriginal'])
     },
     insertTemplate() {
       cardService.insertTemplate(this.resetTpl())

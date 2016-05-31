@@ -9,6 +9,18 @@
         <jo-input label="价格" xs="12">
           <input type="text" class="form-control" v-model='cardData.orderMoney'>
         </jo-input>
+         <jo-input label="商品费(原价)" xs="12">
+          <input type="text" class="form-control" v-model='cardData.serOriginal'>
+        </jo-input>
+         <jo-input label="服务费(原价)" xs="12">
+          <input type="text" class="form-control" v-model='cardData.chargeOriginal'>
+        </jo-input>
+         <jo-input label="特权价格" xs="12">
+          <input type="text" class="form-control" v-model='cardData.serPrice'>
+        </jo-input>
+         <jo-input label="特权服务费" xs="12">
+          <input type="text" class="form-control" v-model='cardData.serCharge'>
+        </jo-input>
       </div>
       <p class="text-center text-info info-title">显示信息</p>
       <div class="row">

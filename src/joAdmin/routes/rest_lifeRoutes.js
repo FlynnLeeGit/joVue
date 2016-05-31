@@ -11,10 +11,4 @@ export default {
       require(['../views/life/LifeList'], resolve)
     }
   },
-  '/PublicityList': {
-    name: 'PublicityList',
-    component: resolve => {
-      require(['../views/publicity/PublicityList'], resolve)
-    }
-  },
 }

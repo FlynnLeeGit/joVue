@@ -2,16 +2,17 @@
   <div>
     <!-- {{option|json}} -->
     <!-- {{data|json}} -->
-    {{callback}}
+    <!-- {{callback}} -->
     <div :class="{'table-responsive':true,'nowrap':option.nowrap}">
       <table class="table table-hover table-bordered table-condensed">
         <tr>
-          <th v-for='col in option.columns' class="text-center text-info">
+          <th v-for='col in option.columns' :class="['text-center',option.orderBy===col.field?'text-success':'text-info',]">
             {{col.th}}
+            <button @click='changeOrderBy(col.field)' class="btn btn-xs btn-default"><i :class="{'fa':true,'fa-arrows-v':true}"></i></button>
           </th>
         </tr>
         <tbody>
-          <tr @click='trclick($event,row)' :class="{'success':isActive(row)}" v-for="row in data |orderByChs option.orderBy option.asc |filterBy searchValue in searchField | limitPage pageCount startPage">
+          <tr @click='trclick($event,row)' v-for="row in data |orderByChs option.orderBy option.asc |filterBy searchValue in searchField | limitPage pageCount startPage">
             <td v-for='col in option.columns'>
               <div v-if='col.convert' class="text-center">
                 {{{col.convert(row[col.field])}}}
@@ -80,7 +81,7 @@ export default {
   data() {
     return {
       startPage: 0,
-      pageCount: 10
+      pageCount: 15
     }
   },
   methods: {
@@ -96,16 +97,15 @@ export default {
         return row[col.field]
       }
     },
-    isActive(row) {
-      if (this.option.activeField) {
-        return row[this.option.activeField] === this.option.activeValue
-      }
+    changeOrderBy(field) {
+      this.$set('option.orderBy', field)
+      this.$set('option.asc', this.option.asc ? this.option.asc * -1 : 1)
     }
   },
   computed: {
     totalPage() { // 总页数计算
       return Math.ceil(this.data.length / this.pageCount)
-    }
+    },
   },
   watch: {
     startPage(nowPage) { // 不能超限选取页码

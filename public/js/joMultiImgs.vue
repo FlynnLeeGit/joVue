@@ -12,7 +12,6 @@
     </div>
     <hr />
     <div class="col-xs-12">
-      {{files|json}}
       <!-- 预览区 -->
       <h5>预览区<input class="jofile" @change='fileChange($event)' type="file" multiple data-content="选择图片(可多选)" accept="image/*"><button @click='upload' class="btn btn-info"><span>上传图片</span><i v-if='loading' class='fa fa-spinner fa-spin'></i></button></h5>
       <h4 v-if='files.length' class="text-danger"> 此为预览区 您选择了图片 但还未上传 上传图片后图片才生效!</h4>
@@ -25,15 +24,15 @@
 </template>
 <script>
 import joFetch from './utils/joFetch'
+const {
+  uploadServer
+} = window.config
+
 export default {
   props: {
     imgs: {
       required: true
     },
-    server: {
-      type: String,
-      required: true
-    }
   },
   data() {
     return {
@@ -73,7 +72,7 @@ export default {
     upload() {
       this.loading = true
       let promiseArr = this.files.map((file) => { // 批量promise异步操作
-        return joFetch.postFile(`${this.server}`, {
+        return joFetch.postFile(uploadServer, {
           uploadFile: file.imgFile
         })
       })

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="page-header">
-      <h4>意见反馈</h4>
+      <h4>意见反馈 <jo-loading :loading='$loadingAsyncData'></jo-loading></h4>
     </div>
     <!-- {{adviceList|json}} -->
     <div>
@@ -12,7 +12,8 @@
 <script>
 import {
   joInput,
-  joTable
+  joTable,
+  joLoading
 } from 'jo'
 import {
   accountService
@@ -24,7 +25,8 @@ import {
 export default {
   components: {
     joInput,
-    joTable
+    joTable,
+    joLoading
   },
   data() {
     return {

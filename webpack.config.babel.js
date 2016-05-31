@@ -3,7 +3,10 @@ var webpack = require('webpack'),
   ExtractTextWebpackPlugin = require('extract-text-webpack-plugin') // 外联css样式插件
 
 var args = require('node-args') // 获取参数
-var projectName = require('./p') // 项目名称
+
+var projectName
+if (args.p1) projectName = require('./p1')
+if (args.p2) projectName = require('./p2')
 
 var path = require('path'),
   projectPath = path.join(__dirname, 'src', projectName), // 项目绝对路径
@@ -11,19 +14,19 @@ var path = require('path'),
 
 var config = {
   entry: {
-    server: path.join(projectPath, 'server.js'),
     app: path.join(projectPath, 'main.js'), //入口js文件
-    vender: ['vue', 'vue-router', 'vue-async-data']
+    vender: ['vue', 'vue-router']
   },
   output: {
     path: 'dist',
     filename: '[name].js?[hash:7]' //此处的name与entry中的键名一样
   },
-  // externals: {
-  //   'vue': 'Vue',
-  //   'vue-router': 'VueRouter',
-  //   'vue-async-data': 'VueAsyncData',
-  // },
+  externals: {
+    // 'vue': 'Vue',
+    // 'vue-router': 'VueRouter',
+    // 'vue-async-data': 'VueAsyncData',
+    'config': 'config'
+  },
   module: {
     // noParse: [/.\/server.js?noNeedParse/], //会直接打包而进行扫文件解析 省去了时间 注意此项会忽略此包依赖
     loaders: [{
@@ -34,22 +37,20 @@ var config = {
       loader: 'babel',
       exclude: /node_modules/
     }, {
+      test: /\.css/,
+      loader: ExtractTextWebpackPlugin.extract('css'),
+      exclude: /node_modules/
+    }, {
       test: /\.json/,
       loader: 'json'
     }, {
-      test: /\.(png|jpg|gif|svg|mp3|ogg)$/,
+      test: /\.(png|jpg|gif|svg|mp3|ogg|woff2)$/,
       loader: 'url',
       query: {
         limit: 1000,
         name: '[name].[ext]?[hash:7]'
       }
-    }, {
-      test: /favicon.ico/,
-      loader: 'file',
-      query: {
-        name: 'favicon.ico'
-      }
-    }, ]
+    }]
   },
   babel: {
     presets: ['es2015'],
@@ -62,6 +63,7 @@ var config = {
       // filename: '../index.html', //以生成资源path路径为基本路径的上一级目录
       template: path.join(projectPath, 'index.html'), //模板路径位置
       inject: true, // js css 插入模板
+      favicon: path.join(projectPath, 'favicon.ico')
     }),
   ],
   resolve: {
@@ -69,6 +71,7 @@ var config = {
     alias: {
       'jo': path.join(__dirname, 'public/js/jo.js'), // jo组件路径别名
       'api': path.join(__dirname, 'public/api/api.js'),
+      'public': path.join(__dirname, 'public') // 公有目录
     }
   },
   vue: {

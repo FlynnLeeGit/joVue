@@ -7,7 +7,7 @@
     <div class="row">
       <jo-input label="购买类型" sm="6">
         <select v-model='searchData.vipWay' class="form-control">
-          <option v-for='o in vipWayOpts' :value="o.value" :selected='$index===0'>{{o.text}}</option>
+          <option v-for='o in buyTypeOpts' :value="o.value" :selected='$index===0'>{{o.text}}</option>
         </select>
       </jo-input>
       <jo-input label="会员等级类型" sm='6'>
@@ -22,7 +22,6 @@
     </p>
     </form>
     <jo-table :data="memberList" :option="tableMemberOpts"></jo-table>
-    {{memberList|json}}
   </div>
 </template>
 <script>
@@ -35,7 +34,7 @@ import {
 
 import {
   tableMemberOpts,
-  vipWayOpts
+  buyTypeOpts,
 } from './orderOptions'
 
 import {
@@ -50,7 +49,7 @@ export default {
   },
   data() {
     return {
-      vipWayOpts,
+      buyTypeOpts,
       memberLevelOpts: [],
       tableMemberOpts,
       reloadListCount: 0,

@@ -32,10 +32,10 @@
           </jo-input>
         </div>
         <div class="col-sm-6">
-          <jo-single-img :server='uploadServer' :img.sync='editData.serImg' label='特权图片'></jo-single-img>
+          <jo-single-img :img.sync='editData.serImg' label='特权图片'></jo-single-img>
         </div>
         <div class="col-sm-6">
-          <jo-single-img :server='uploadServer' :img.sync='editData.serIcon' label='服务图标'></jo-single-img>
+          <jo-single-img :img.sync='editData.serIcon' label='服务图标'></jo-single-img>
         </div>
         <!-- service price list -->
         <h3 class="col-xs-12">
@@ -101,7 +101,6 @@ export default {
       },
       servicePriceList: [],
       serviceCategoryList: [],
-      uploadServer: `${window.server}/qiniu/upload/0`
     }
   },
   computed: {

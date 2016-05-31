@@ -15,7 +15,7 @@
           <textarea v-model='c.content' class="form-control" rows="5"></textarea>
         </div>
         <div class="col-sm-6">
-          <jo-single-img :server='requestServer' :img.sync='c.imgUrl'></jo-single-img>
+          <jo-single-img :img.sync='c.imgUrl'></jo-single-img>
         </div>
       </div>
     </div>
@@ -28,18 +28,12 @@ import {
   joInput,
   joSingleImg
 } from 'jo'
-const server = window.server
 export default {
   props: ['data'],
   components: {
     joInput,
     joStr,
     joSingleImg
-  },
-  data() {
-    return {
-      requestServer: `${server}/qiniu/upload/0`
-    }
   },
   methods: {
     addIntro() {

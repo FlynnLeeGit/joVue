@@ -3,7 +3,6 @@
     <div class="page-header">
       <h4>管家合作商<jo-loading :loading="$loadingAsyncData"></jo-loading><button class="btn btn-primary" @click='showAdd=true'><i class="fa fa-plus"></i> 添加合作商</button></h4>
     </div>
-    {{joAlert|json}}
     <!-- 新增面板 -->
     <partner-panel v-if='showAdd' :show.sync='showAdd' mode='add' :reload-list.sync='reloadList' :jo-alert.sync='joAlert'></partner-panel>
     <!-- 编辑面板 -->

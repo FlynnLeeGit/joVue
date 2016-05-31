@@ -7,23 +7,19 @@ import routerMap from './routes/routerMap.js'
 
 Vue.use(VueRouter)
 Vue.use(VueAsyncData)
-import { limitPage, orderByChs } from './filters/filters'
+import { limitPage, orderByChs, orderTypeToString } from './filters/filters'
 
 Vue.filter('limitPage', limitPage)
 Vue.filter('orderByChs', orderByChs)
+Vue.filter('orderTypeToString', orderTypeToString)
 
 Vue.config.debug = process.env.DEBUG
 
-// 过滤器
-
-
-//网站图标
-import './favicon.ico'
 
 const router = new VueRouter()
 router.map(routerMap)
 router.beforeEach(() => {
-  // window.scrollTo(0, 0)
+  window.scrollTo(0, 50)
 })
 router.redirect({
   '*': '/OrderList'

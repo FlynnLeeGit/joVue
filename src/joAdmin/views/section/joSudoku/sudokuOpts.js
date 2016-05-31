@@ -3,7 +3,13 @@ const convertCaozuo = () => {
     <button class='btn btn-xs btn-warning' data-type='under'>下线</button>`
 
 }
+const convertTime = (time) => {
+  return new Date(time).toLocaleDateString()
+}
+
 const sudokuTableOpts = {
+  orderBy: 'serStatus',
+  asc: -1,
   columns: [{
     th: '编号',
     field: 'serNo'
@@ -15,10 +21,11 @@ const sudokuTableOpts = {
     field: 'serCategory'
   }, {
     th: '状态',
-    field: 'provider'
+    field: 'serStatus'
   }, {
-    th: '添加时间',
-    field: 'provider'
+    th: '更新时间',
+    field: 'updateTime',
+    convert: convertTime
   }, {
     th: '操作',
     convert: convertCaozuo

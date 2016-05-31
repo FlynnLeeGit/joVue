@@ -10,8 +10,6 @@ import CardInfo from './views/card/CardInfo'
 // 过滤器
 import './filters/filters'
 
-//网站图标
-import './favicon.ico'
 
 Vue.use(VueAsyncData)
 Vue.use(VueRouter)

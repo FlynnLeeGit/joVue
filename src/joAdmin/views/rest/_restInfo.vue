@@ -82,7 +82,7 @@
     <!-- {{restInfoAdd|json}} -->
     <!-- row3结束 -->
     <div class="row">
-      <jo-multi-imgs :imgs.sync='data.carouselUrl' :server='requestServer'></jo-multi-imgs>
+      <jo-multi-imgs :imgs.sync='data.carouselUrl'></jo-multi-imgs>
     </div>
   </div>
 </template>
@@ -99,7 +99,6 @@ import {
   joInput,
   joMultiImgs
 } from 'jo'
-const server = window.server
 
 export default {
   props: ['data'],
@@ -113,7 +112,6 @@ export default {
       hotAreaOptions,
       cuisineIdOptions,
       aheadTimeOptions,
-      requestServer: `${server}/qiniu/upload/0`
     }
   }
 }

@@ -21,7 +21,7 @@
         </jo-input>
       </div>
       <div class="col-sm-6">
-        <jo-single-img :img.sync="intro.imgUrl" :server='requestServer'></jo-single-img>
+        <jo-single-img :img.sync="intro.imgUrl"></jo-single-img>
       </div>
     </div>
     <button class="btn btn-success btn-sm" @click="data.contents.push({})"><i class="fa fa-plus"></i>添加详情介绍组</button>
@@ -33,18 +33,12 @@ import {
   joSingleImg,
   joStr
 } from 'jo'
-const server = window.server
 export default {
   props: ['data'],
   components: {
     joInput,
     joSingleImg,
     joStr,
-  },
-  data() {
-    return {
-      requestServer: `${server}/qiniu/upload/0`
-    }
   }
 }
 </script>

@@ -3,6 +3,7 @@
     <div class="page-header">
       <h4>用户列表 <jo-loading :loading="$loadingAsyncData"></jo-loading></h4>
     </div>
+    <!-- {{userList|json}} -->
     <div class="row">
       <jo-input sm="3" label="注册时间">
         <jo-datetime ph="注册起始时间" :value.sync='searchData.registStartTime'></jo-datetime>

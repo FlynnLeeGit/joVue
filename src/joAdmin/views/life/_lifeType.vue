@@ -36,7 +36,7 @@
         <textarea v-model='data.memo' class="form-control" rows="3"></textarea>
       </jo-input>
       <div class="col-xs-12">
-        <jo-multi-imgs :multiple='true' :imgs.sync='data.carouselUrl' :server="requestServer"></jo-multi-imgs>
+        <jo-multi-imgs :multiple='true' :imgs.sync='data.carouselUrl'></jo-multi-imgs>
       </div>
     </div>
   </div>
@@ -60,8 +60,7 @@ export default {
   data() {
     return {
       hotAreaOptions,
-      districtOptions,
-      requestServer: `${server}/qiniu/upload/0`
+      districtOptions
     }
   }
 }

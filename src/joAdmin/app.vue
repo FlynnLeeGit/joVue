@@ -3,7 +3,7 @@
     <nav class="navbar navbar-inverse">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" v-link="{path:'OrderList'}">JO <sup>+</sup>后台管理系统 2.2</a>
+          <a class="navbar-brand" v-link="{path:'OrderList'}">JO <sup>+</sup>后台管理系统 2.2 当前连接服务器{{SERVER_ADDRESS}}</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
           <jo-dropdown label='请选择主题'>
@@ -34,7 +34,8 @@ import {
   joDropdown,
   joAlert
 } from 'jo'
-const wsServer = window.wsServer
+
+log(config)
 import SideBar from './views/SideBar'
 export default {
   components: {
@@ -44,6 +45,7 @@ export default {
   },
   data() {
     return {
+      SERVER_ADDRESS: window.config.server,
       alertObj: {
         msg: '',
         show: false,
@@ -110,7 +112,7 @@ export default {
     // 获得主题索引
     this.themeIndex = +window.localStorage.getItem('themeIndex') || -1
       // 建立websocket连接
-    const ws = new window.WebSocket(wsServer)
+    const ws = new window.WebSocket(window.config.wsServer)
     ws.onopen = () => {
       console.log('ws连接成功!')
       ws.onmessage = (e) => {

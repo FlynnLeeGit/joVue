@@ -4,9 +4,11 @@
   "description": "demo",
   "main": "index.js",
   "scripts": {
-    "dev": "rm -rf dist && webpack-dev-server --dev --inline --hot --progress --host 0.0.0.0 ",
+    "dev1": "rm -rf dist && webpack-dev-server --inline --hot  --host 0.0.0.0 --dev --p1",
+    "dev2": "rm -rf dist && webpack-dev-server --inline --hot  --host 0.0.0.0 --port 4000 --p2",
     "devs": "rm -rf dist && webpack-dev-server --https --dev --inline --hot --progress --host 0.0.0.0 ",
-    "build": "rm -rf dist && webpack --progress --hide-modules --production"
+    "build1": "rm -rf dist && webpack --progress --hide-modules --production --p1",
+    "build2": "rm -rf dist && webpack --progress --hide-modules --production --p2"
   },
   "author": "",
   "license": "MIT",
@@ -30,6 +32,7 @@
     "webpack-dev-server": "^1.14.0"
   },
   "dependencies": {
+    "classnames": "^2.2.5",
     "es6-promise": "^3.1.2",
     "extract-text-webpack-plugin": "^1.0.1",
     "html-webpack-plugin": "^2.15.0",

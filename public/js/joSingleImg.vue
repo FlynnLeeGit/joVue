@@ -18,13 +18,14 @@
 </template>
 <script>
 import joFetch from './utils/joFetch'
+
+const {
+  uploadServer
+} = window.config
+
 export default {
   props: {
     img: {
-      required: true
-    },
-    server: {
-      type: String,
       required: true
     },
     label: {
@@ -53,7 +54,7 @@ export default {
     },
     upload() {
       this.loading = true
-      joFetch.postFile(`${this.server}`, {
+      joFetch.postFile(uploadServer, {
           uploadFile: this.file.imgFile
         })
         .then(res => {

@@ -13,10 +13,8 @@
 import {
   joAlert
 } from 'jo'
-import VuexStore from './vuex/store'
 
 export default {
-  store: VuexStore,
   components: {
     joAlert
   },
@@ -41,6 +39,7 @@ export default {
   },
 
   ready() {
+    console.log(this.$route)
     this.$on('showAlert', msg => {
       this.alertObj = {
         show: true,

@@ -5,6 +5,7 @@
         <h4>合作商面板{{mode}}<jo-loading :loading='$loadingAsyncData'></jo-loading></h4>
       </div>
       <div class="modal-body" slot="modal-body">
+        {{editData|json}}
         <div class="row">
           <jo-input sm='12' label='合作商描述名称'>
             <input v-model='editData.partnerName' type="text" class="form-control">
@@ -14,8 +15,8 @@
           </jo-input>
           {{memberType}}
           <jo-input sm="12" label="会员价格等级" after='元'>
-            <select v-model='editData.money' class="form-control">
-              <option track-by='$index' v-for='m in memberOpts'>{{m}}</option>
+            <select @change='bindMoney($event)' v-model='editData.memberId' class="form-control">
+              <option v-for='o in memberOpts' :value='o.memberId'>{{o.memberLevel}} {{o.memberMoney}}</option>
             </select>
           </jo-input>
         </div>
@@ -55,7 +56,8 @@ export default {
   data() {
     return {
       editData: {},
-      memberOpts: []
+      memberOpts: [],
+
     }
   },
   computed: {
@@ -67,6 +69,14 @@ export default {
     }
   },
   methods: {
+    bindMoney(e) {
+      // 将money字段赋值到editData中
+
+      let memberId = e.target.value
+      this.memberOpts.forEach(m => {
+        if (m.memberId === memberId) this.$set('editData.money', m.memberMoney)
+      })
+    },
     updateList(msg) {
       this.show = false
       this.reloadList += 1
@@ -82,8 +92,8 @@ export default {
   },
   asyncData(resolve, reject) {
     vipService.getVips()
-      .then(list => resolve({
-        memberOpts: list.map(val => val.memberMoney)
+      .then(memberOpts => resolve({
+        memberOpts
       }))
     if (this.isEdit) vipService.getOnePartner(this.id)
       .then(editData => resolve({
