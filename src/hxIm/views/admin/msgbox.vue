@@ -19,12 +19,11 @@ export default {
       default: 'left'
     },
     time: {
-      type: String,
-      default: '01月01日 19:29:38(test)'
+      default: ''
     },
     mobile: {
       type: String,
-      default: '18019176143(test)'
+      default: ''
     }
   },
   components: {
@@ -54,7 +53,7 @@ export default {
 <style>
 .msgbox {
   text-align: left;
-  max-width: 50%;
+  max-width: 300px;
   padding: 10px;
   display: inline-block;
   border-radius: 5px;

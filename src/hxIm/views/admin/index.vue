@@ -10,41 +10,31 @@
 <script>
 import mdBtn from '../../components/mdBtn'
 import mdFlatBtn from '../../components/mdFlatBtn'
+import {
+  conn
+} from '../../utils/easeim'
 export default {
   name: 'admin-wrap',
   components: {
     mdBtn,
     mdFlatBtn
   },
+  data() {
+    return {}
+  },
   methods: {
     goLogin() {
+      conn.close()
       this.$router.go({
         name: 'userLogin'
       })
     }
   },
-  route: {
-    activate({
-      to,
-      next,
-      redirect
-    }) {
-      log(to)
-      if (!to.auth) {
-        next()
-      } else {
-        redirect('/userLogin')
-      }
-    }
-  },
-  ready() {
-
-  }
 };
 </script>
 <style>
 aside {
-  flex: 0 0 180px;
+  flex: 0 0 150px;
 }
 
 article {

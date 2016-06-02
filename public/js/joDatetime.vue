@@ -14,18 +14,17 @@
       <p @click='setToday' class="text-center text-primary today">设定到现在</p>
     </div>
     <div v-show='!noTime'>
-    <select v-model='hour' class="form-control select">
-      <option :value='h' v-for='h in 24'>{{h}}点</option>
-    </select>
-    <select v-model='min' class="form-control select">
-      <option :value='m*5' v-for='m in 12'>{{m*5}}分</option>
-    </select>
+      <select v-model='hour' class="form-control select">
+        <option :value='h' v-for='h in 24'>{{h}}点</option>
+      </select>
+      <select v-model='min' class="form-control select">
+        <option :value='m*5' v-for='m in 12'>{{m*5}}分</option>
+      </select>
     </div>
     <p class="text-center">
       <button @click='confirmValue' class="btn btn-block btn-sm btn-primary">确认时间</button>
     </p>
   </div>
-
 </template>
 <script>
 export default {
@@ -37,14 +36,14 @@ export default {
       type: String,
       default: 'Pick Date'
     },
-    noTime:{
-      type:Boolean,
-      default:false
+    noTime: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
-      timeValue: this.value || `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} 08:00`,
+      timeValue: this.value || `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} 00:00`,
       show: false,
       dayArr: ['日', '一', '二', '三', '四', '五', '六']
     }
@@ -64,9 +63,9 @@ export default {
       this.setToday()
     },
     confirmValue() {
-      
+
       this.value = this.timeValue
-       if(this.noTime) this.value=this.timeValue.split(' ')[0]
+      if (this.noTime) this.value = this.timeValue.split(' ')[0]
       this.show = false
     },
     format(num) {
@@ -156,8 +155,8 @@ export default {
 
 .date {
   position: absolute;
-  right: 0%;
-  top: 40px;
+  right: 0;
+  top: 0;
   z-index: 999;
   background-color: #fff;
   box-sizing: content-box;

@@ -5,11 +5,10 @@
         <a v-link="{path:'/'}" class="brand-logo center">环信即时通讯客户端</a>
       </div>
     </nav>
-    <!-- <div class="load-panel">
-  {{showLoading}}
-  <md-loading size='lg' theme='green'></md-loading>
-</div>
- -->
+    <div class="load-panel" v-if='showLoading'>
+      {{showLoading}}
+      <md-loading size='lg' theme='green'></md-loading>
+    </div>
     <main>
       <router-view></router-view>
     </main>
@@ -32,7 +31,6 @@ export default {
     return {
       mainColor: 'teal',
       showLoading: false,
-      conn: new Easemob.im.Connection()
     }
   }
 }
@@ -41,6 +39,8 @@ export default {
 html,
 body,
 #app {
+  min-width: 1024px;
+  min-height: 600px;
   width: 100%;
   height: 100%;
   display: flex;

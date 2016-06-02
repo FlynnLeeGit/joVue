@@ -2,30 +2,29 @@
   <modal :show.sync='show' :small='true' :callback='confirm' title='生成会员优惠券'>
     <div slot='modal-body' class="modal-body row">
       {{couponData|json}}
-      <jo-input label='合作商会员' sm='12'>
-        <select v-model='couponData.partner' class="form-control">
-          <option v-for='o in partnerList' :value="o.partnerId">{{o.memberName}}</option>
+      <jo-input label='合作商会员选择' sm='12'>
+        <select v-model='couponData.partnerId' class="form-control">
+          <option v-for='o in partnerList' :value='o.partnerId'>{{o.memberName}}</option>
         </select>
       </jo-input>
       <jo-input label="合作商" sm="12">
-        <select v-model='couponData.member' class="form-control">
-          <option v-for='o in memberList' :value="o.memberId">{{o.memberLevel}} {{o.memberMoney}}</option>
-        </select>
+        <input type="text" v-model='pName' class="form-control" disabled>
       </jo-input>
-      <jo-input label='会员用户' sm='12'>
-        <input type="text" class="form-control" readonly>
+      <jo-input label='会员等级' sm='12'>
+        <input type="text" v-model='mLevel' class="form-control" disabled>
       </jo-input>
+      <!-- ** -->
       <jo-input label="会员月数" sm="12">
-        <input v-model='couponData.month' type="number" class="form-control" min="0">
+        <input v-model='couponData.availableMonths' type="number" class="form-control" min="0">
       </jo-input>
       <jo-input label="兑换截止" sm="12">
-        <jo-datetime :value.sync='couponData.exp'></jo-datetime>
+        <jo-datetime :value.sync='couponData.expirDate'></jo-datetime>
       </jo-input>
       <jo-input label='邀请码标识' sm='12'>
-        <input type="text" class="form-control" v-model='couponData._invite' maxlength='3' placeholder="三个字符标识">
+        <input type="text" class="form-control" v-model='couponData._vcouponCode' maxlength='3' placeholder="三个字符标识">
       </jo-input>
       <jo-input label='生成数量' sm='12'>
-        <select v-model='couponData.num' class="form-control">
+        <select v-model='couponNum' class="form-control">
           <option v-for='n in 10' :>{{n+1}}</option>
         </select>
       </jo-input>
@@ -40,6 +39,7 @@ import {
   joDatetime
 } from 'jo'
 import {
+  v2CouponService,
   vipService
 } from 'api'
 export default {
@@ -64,7 +64,10 @@ export default {
     return {
       couponData: {},
       partnerList: [],
-      memberList: []
+      memberList: [],
+      pName: '',
+      mLevel: '',
+      couponNum: 1,
     }
   },
   methods: {
@@ -73,22 +76,31 @@ export default {
       this.reloadList += 1
       this.$root.$emit('showAlert', msg)
     },
-    confrim() {
-      log('生成')
+    confirm() {
+      v2CouponService.insertVipCoupon(this.couponData, this.couponNum)
+        .then(res => log(res))
     }
   },
   asyncData(resolve, reject) {
-
     Promise.all([vipService.getPartners(), vipService.getVips()])
       .then(([partnerList, memberList]) => resolve({
         partnerList,
         memberList
       }))
-
   },
   watch: {
-    'couponData._invite' (newVal) {
-      this.$set('couponData.invite', 'v' + newVal)
+    'couponData._vcouponCode' (newVal) {
+      this.$set('couponData.vcouponCode', 'v' + newVal)
+    },
+    'couponData.partnerId' (newPartnerId) {
+      this.partnerList.forEach(par => {
+        if (par.partnerId === newPartnerId) {
+          this.$set('couponData.memberName', par.memberName)
+          this.$set('couponData.memberId', par.memberId)
+          this.pName = par.partnerName
+          this.mLevel = par.money
+        }
+      })
     }
   }
 };

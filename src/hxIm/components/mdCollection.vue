@@ -33,11 +33,15 @@ export default {
     iconColor: {
       type: String,
       default: ''
+    },
+    active: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
     collectionCls() {
-      return cx(['collection-item', this.isAvatarList ? 'avatar' : ''])
+      return cx(['collection-item', this.isAvatarList ? 'avatar' : '', this.active ? 'active' : ''])
     },
     iconCls() {
       return cx(['material-icons', 'circle', this.iconColor])
@@ -48,12 +52,17 @@ export default {
   }
 };
 </script>
-<style lang='sass'>
+<style>
 .collection .collection-item {
   cursor: pointer;
 }
 
 .collection .collection-item.avatar {
   min-height: 64px !important;
+}
+
+.secondary-content {
+  top: 8px !important;
+  right: 8px !important;
 }
 </style>

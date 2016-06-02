@@ -3,10 +3,10 @@
     <div class="card-content white-text">
       <span class="card-title">用户登陆</span>
       <div class="row">
-        <md-input :model.sync='user' label='用户' icon='account_circle'></md-input>
-        <md-input :model.sync='pwd' label='密码' type='password' icon='verified_user'></md-input>
+        <md-input :model.sync='loginData.user' label='用户' icon='account_circle'></md-input>
+        <md-input :model.sync='loginData.pwd' label='密码' type='password' icon='verified_user'></md-input>
       </div>
-      <p class="red-text">{{errorMsg}}</p>
+      <p class="red-text">{{$route.query.error}}</p>
     </div>
     <div class="card-action">
       <md-btn @click='login' theme="orange" icon='done_all'>提交</md-btn>
@@ -16,6 +16,9 @@
 <script>
 import mdInput from '../../components/mdInput'
 import mdBtn from '../../components/mdBtn'
+import {
+  conn
+} from '../../utils/easeim'
 export default {
   name: 'userLogin',
   components: {
@@ -24,31 +27,16 @@ export default {
   },
   data() {
     return {
-      user: '',
-      pwd: '',
-      errorMsg: ''
+      loginData: {}
     }
   },
   methods: {
     login() {
-      this.$root.conn.open({
-        user: this.user,
-        pwd: this.pwd,
-        appKey: 'easemob-demo#chatdemoui'
-      })
-    }
-  },
-  ready() {
-    this.$root.conn.onOpened = () => {
+      localStorage.setItem('token', JSON.stringify(this.loginData))
       this.$router.go({
-        name: 'admin',
-        auth: true
+        name: 'admin'
       })
     }
-    this.$root.conn.onError = e => {
-      this.errorMsg = e.msg
-    }
-
   }
 };
 </script>

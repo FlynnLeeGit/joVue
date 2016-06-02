@@ -37,13 +37,13 @@ export const businessCouponTableOpts = {
 export const memberCouponTableOpts = {
   nowrap: true,
   columns: [
-    { th: '编号', field: 'no' },
-    { th: '供应商', field: '' },
-    { th: '会员码', field: '' },
+    { th: '编号', field: 'vcouponNo' },
+    { th: '供应商', field: 'provider' },
+    { th: '会员码', field: 'vcouponCode' },
     { th: '会员类别', field: 'memberLevel' },
-    { th: '时限', field: '' },
-    { th: '兑换截止日期', field: '' },
-    { th: '是否已兑换', field: '' },
-    { th: '生成时间', field: '' },
+    { th: '时限', field: 'availableMonths' },
+    { th: '兑换截止日期', field: 'expirDate' },
+    { th: '是否已兑换', field: 'vcouponStatus' },
+    { th: '生成时间', field: 'createdTime' },
   ]
 }

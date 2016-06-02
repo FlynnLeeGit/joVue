@@ -25,6 +25,6 @@ export default {
     },
     // 添加会员优惠券
     insertVipCoupon(couponJson, couponNum) {
-      return joFetch.post(`${couponServer}/vip/insert`, { vipCoupon: JSON.stringify(couponJson) }, couponNum)
+      return joFetch.post(`${couponServer}/vip/insert`, { vipCoupon: JSON.stringify(couponJson), couponNum })
     },
 }

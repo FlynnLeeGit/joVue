@@ -24,12 +24,17 @@
           <input v-model='editData.chargeOriginal' type="number" class="form-control">
         </jo-input>
         <div class="row col-xs-12">
-          <div class="col-sm-6">
+          <div class="col-sm-7">
+            <jo-input label="服务介绍" sm="12">
+              <textarea v-model='editData.serDesc' rows="5" class="form-control"></textarea>
+            </jo-input>
+            <jo-input label="询问语" sm="12">
+              <textarea v-model='editData.serAsk' rows="2" class="form-control"></textarea>
+            </jo-input>
+          </div>
+          <div class="col-sm-5">
             <jo-str :async='true' desc='子服务' split-key='@' :str.sync='editData.subSers'></jo-str>
           </div>
-          <jo-input label="服务介绍" sm="6">
-            <textarea v-model='editData.serDesc' rows="4" class="form-control"></textarea>
-          </jo-input>
         </div>
         <div class="col-sm-6">
           <jo-single-img :img.sync='editData.serImg' label='特权图片'></jo-single-img>

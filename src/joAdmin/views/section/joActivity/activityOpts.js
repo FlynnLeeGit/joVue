@@ -1,7 +1,7 @@
 const convertCaozuo = () => {
   return `<button class='btn btn-xs btn-default' data-type='edit'>编辑</button>
   <button class='btn btn-xs btn-warning' data-type='down'>下线</button>
-  <button class='btn btn-xs btn-info' data-type='up'>重新上线</button>`
+  <button class='btn btn-xs btn-info' data-type='up'>上线</button>`
 }
 const convertDele = (val) => {
   switch (val) {
@@ -16,7 +16,6 @@ const convertDele = (val) => {
 
 export const activityTableOpts = {
   orderBy: 'isDele',
-
   columns: [{
     th: '编号',
     field: 'activityNo'

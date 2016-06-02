@@ -4,7 +4,7 @@
       <h4>不等位/待排队 <jo-loading :loading="$loadingAsyncData"></jo-loading></h4> {{searchData|json}}
     </div>
     <!-- 统计 -->
-    <div class="alert alert-info">订单数量 {{datalist.length}}个 订单金额 {{chartObj.orderMoney | currency '¥'}} 支付金额 {{chartObj.paidMoney|currency '¥'}} 下单人数 {{orderPersonCount}}人</div>
+    <div class="alert alert-info">订单数量 {{datalist.length}}个 订单金额 {{chartObj.orderMoney | currency '¥'}} 支付金额 {{chartObj.paidMoney|currency '¥'}} 下单人数 {{orderPersonCount}}人(同一手机号为1人)</div>
     <!-- 筛选区 -->
     <jo-input sm='4' label="下单起始时间">
       <jo-datetime :value.sync='searchData.startTime'></jo-datetime>

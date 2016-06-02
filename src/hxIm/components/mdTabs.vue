@@ -31,6 +31,7 @@ export default {
       $('.tabs .indicator').css({
         background: this.theme
       })
+      $('ul.tabs').tabs();
     })
   }
 };
