@@ -233,7 +233,7 @@ export const tableMemberOpts = {
   nowrap: true,
   columns: [{
     th: '购买类型',
-    field: 'buyType'
+    field: 'buyWay'
   }, {
     th: '会员描述',
     field: 'memberLevel'

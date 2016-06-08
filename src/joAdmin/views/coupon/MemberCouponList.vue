@@ -5,7 +5,7 @@
       <h4>会员优惠券 <button @click='showAdd=true' class="btn btn-warning">添加会员券</button><jo-loading :loading="$loadingAsyncData"></jo-loading></h4>
     </div>
     <member-coupon-panel v-if='showAdd' :show.sync='showAdd' :reload-list.sync='reloadList'></member-coupon-panel>
-    <jo-table :data="datalist" :option='memberCouponTableOpts' @trclick='tableClick'></jo-table>
+    <jo-table :data="couponList" :option='memberCouponTableOpts'></jo-table>
   </div>
 </template>
 <script>
@@ -17,6 +17,9 @@ import memberCouponPanel from './memberCouponPanel'
 import {
   memberCouponTableOpts
 } from './couponOpts'
+import {
+  v2CouponService
+} from 'api'
 export default {
   components: {
     joLoading,
@@ -28,16 +31,15 @@ export default {
       memberCouponTableOpts,
       showAdd: false,
       reloadList: 0,
-
-    }
-  },
-  methods: {
-    tableClick(e, row, type) {
+      couponList: []
 
     }
   },
   asyncData(resolve, reject) {
-    resolve()
+    v2CouponService.getVipCoupons()
+      .then(couponList => resolve({
+        couponList
+      }))
   },
   watch: {
     'reloadList': 'reloadAsyncData'

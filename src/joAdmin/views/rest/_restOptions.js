@@ -2,7 +2,8 @@ const tabList = [
   { title: '餐厅信息', page: 'rest-info' },
   { title: '分店信息', page: 'rest-subshop' },
   { title: '餐厅介绍', page: 'rest-intro' },
-  { title: '推荐菜', page: 'rest-menu' }
+  { title: '推荐菜', page: 'rest-menu' },
+  { title: '时间设置', page: 'rest-time' }
 ]
 const aheadTimeOptions = [
   { value: 0, text: '0' },

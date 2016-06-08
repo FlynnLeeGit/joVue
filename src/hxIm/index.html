@@ -19,12 +19,20 @@
   <script src="http://webim.easemob.com/static/sdk/strophe.js"></script>
   <script src="http://webim.easemob.com/static/sdk/easemob.im-1.1.js"></script>
   <script src="http://webim.easemob.com/static/sdk/easemob.im-1.1.shim.js"></script>
+  <script src='http://localhost:8181/horizon/horizon.js'></script>
   <!-- some script i wrote -->
   <script>
   var log = console.log.bind(console)
+  var sf = JSON.stringify.bind(JSON)
   window.config = {
 
   }
+  var hz = new Horizon({
+    host: 'localhost:8181'
+  })
+  var agentStore = hz('hxAgent')
+  var msgStore = hz('hxMessage')
+  var mapStore = hz('hxMap')
   </script>
 </head>
 

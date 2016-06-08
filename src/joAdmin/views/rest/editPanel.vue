@@ -24,7 +24,8 @@ export default {
     restInfo: require('./_restInfo'),
     restSubshop: require('./_restSubshop'),
     restIntro: require('./_restIntro'),
-    restMenu: require('./_restMenu')
+    restMenu: require('./_restMenu'),
+    restTime: require('./_restTime'),
   },
   data() {
     return {

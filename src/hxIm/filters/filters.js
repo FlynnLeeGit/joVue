@@ -1,11 +1,10 @@
 import Vue from 'vue'
 Vue.filter('time', time => {
-  const date = new Date(time)
-  return `${date.getHours()}:${date.getMinutes()}`
+  return time
 })
-Vue.filter('datetime', time => {
 
-  return new Date(time).toLocaleDateString() + ' ' + new Date(time).toLocaleTimeString()
+Vue.filter('datetime', time => {
+  return new Date(+time).toLocaleDateString() + ' ' + new Date(+time).toLocaleTimeString()
 })
 Vue.filter('emojiReg', data => {
   let emojiUrl = emoji => `http://kefu.easemob.com/images/faces/${emoji}`
@@ -18,4 +17,16 @@ Vue.filter('emojiReg', data => {
 })
 Vue.filter('emojiUrl', emoji => {
   return `http://kefu.easemob.com/images/faces/${emoji}`
+})
+Vue.filter('typeMsg', payload => {
+  switch (payload.type) {
+    case 'txt':
+      return payload.msg
+    case 'img':
+      return `<img src=${payload.url} width=100% />`
+    case 'audio':
+      return `<audio src=${payload.url} width=80% />`
+    default:
+      return ''
+  }
 })

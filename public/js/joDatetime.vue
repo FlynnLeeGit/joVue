@@ -2,7 +2,7 @@
   <input readonly @click.stop='openDatePanel' type="text" v-model='value' class="form-control date-input" :placeholder="ph">
   <span @click="resetDate" class="input-group-addon reset-time">&times;</span>
   <div @click.stop v-if='show' class="date" :style='dateStyle'>
-    <div>
+    <div v-show='!noDate'>
       <p class="text-center">
         <button @click='this.month-=1' class="btn btn-xs btn-default">
           <--</button>
@@ -39,6 +39,10 @@ export default {
     noTime: {
       type: Boolean,
       default: false
+    },
+    noDate: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -63,9 +67,9 @@ export default {
       this.setToday()
     },
     confirmValue() {
-
       this.value = this.timeValue
       if (this.noTime) this.value = this.timeValue.split(' ')[0]
+      if (this.noDate) this.value = this.timeValue.split(' ')[1]
       this.show = false
     },
     format(num) {

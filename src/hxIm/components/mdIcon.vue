@@ -1,6 +1,6 @@
 <template>
   <i :class='iconCls'>
- 	<slot></slot>	
+  <slot></slot> 
  </i>
 </template>
 <script>
@@ -11,6 +11,10 @@ export default {
     size: {
       type: String,
       default: 'sm'
+    },
+    theme: {
+      type: String,
+      default: ''
     }
   },
   computed: {
@@ -21,7 +25,7 @@ export default {
         sm: 'small',
         xs: 'tiny',
       }
-      return cx(['material-icons', sizeMap[this.size]])
+      return cx(['material-icons', sizeMap[this.size]], this.theme)
     }
   }
 };

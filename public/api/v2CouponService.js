@@ -20,7 +20,7 @@ export default {
     /** [会员优惠券板块] */
     // 获得会员优惠券
     getVipCoupons() {
-      return joFetch.post(`${couponServer}/vip`)
+      return joFetch.post(`${couponServer}/vip/select`)
         .then(res => res.list)
     },
     // 添加会员优惠券

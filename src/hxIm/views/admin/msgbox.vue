@@ -53,7 +53,7 @@ export default {
 <style>
 .msgbox {
   text-align: left;
-  max-width: 300px;
+  max-width: 250px;
   padding: 10px;
   display: inline-block;
   border-radius: 5px;

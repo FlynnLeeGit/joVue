@@ -8,10 +8,10 @@
         </select>
       </jo-input>
       <jo-input label="合作商" sm="12">
-        <input type="text" v-model='pName' class="form-control" disabled>
+        <input type="text" v-model='couponData.provider' class="form-control" disabled>
       </jo-input>
       <jo-input label='会员等级' sm='12'>
-        <input type="text" v-model='mLevel' class="form-control" disabled>
+        <input type="text" v-model='couponData.vcouponMoney' class="form-control" disabled>
       </jo-input>
       <!-- ** -->
       <jo-input label="会员月数" sm="12">
@@ -65,8 +65,6 @@ export default {
       couponData: {},
       partnerList: [],
       memberList: [],
-      pName: '',
-      mLevel: '',
       couponNum: 1,
     }
   },
@@ -78,7 +76,7 @@ export default {
     },
     confirm() {
       v2CouponService.insertVipCoupon(this.couponData, this.couponNum)
-        .then(res => log(res))
+        .then(this.updateList('添加会员券成功!'))
     }
   },
   asyncData(resolve, reject) {
@@ -97,8 +95,8 @@ export default {
         if (par.partnerId === newPartnerId) {
           this.$set('couponData.memberName', par.memberName)
           this.$set('couponData.memberId', par.memberId)
-          this.pName = par.partnerName
-          this.mLevel = par.money
+          this.$set('couponData.provider', par.partnerName)
+          this.$set('couponData.vcouponMoney', par.money)
         }
       })
     }

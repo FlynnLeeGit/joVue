@@ -4,9 +4,10 @@
       <h4>会员订单列表 <jo-loading :loading="$loadingAsyncData"></jo-loading></h4>
     </div>
     {{searchData|json}}
+    <!-- {{memberList|json}} -->
     <div class="row">
       <jo-input label="购买类型" sm="6">
-        <select v-model='searchData.vipWay' class="form-control">
+        <select v-model='searchData.buyWay' class="form-control">
           <option v-for='o in buyTypeOpts' :value="o.value" :selected='$index===0'>{{o.text}}</option>
         </select>
       </jo-input>
