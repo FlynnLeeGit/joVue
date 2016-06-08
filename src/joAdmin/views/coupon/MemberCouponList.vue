@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- {{datalist|json}} -->
+    <!-- {{couponList|json}} -->
     <div class="page-header">
       <h4>会员优惠券 <button @click='showAdd=true' class="btn btn-warning">添加会员券</button><jo-loading :loading="$loadingAsyncData"></jo-loading></h4>
     </div>

@@ -6,7 +6,7 @@
           <md-collection :active="nowRoster.from===m.from" @click='changeRoster(m)' icon='assignment_ind' v-for='m in chatList' :title='m.from'>
             <p slot='primary' class="grey-text">{{m.msg}}</p>
             <p slot='secondary'>{{m.created_time | time}}
-              <br /><span v-show='m.unreadNum' class="new badge">{{m.unreadNum}}</span>
+              <br /><span class="new badge">0</span>
             </p>
           </md-collection>
         </md-collections>
@@ -118,11 +118,13 @@ export default {
       msgList: [],
       mapHash: {},
       mapId: null,
+
       /** [本地变量] */
       showEmoji: false,
       emojoList: {},
       msg: '',
       nowRoster: {},
+
       notifyAudio: require('../../static/msg.mp3'),
       user: JSON.parse(localStorage.getItem('token')).user
     };
@@ -133,19 +135,34 @@ export default {
     },
     chatList() {
       let tmpArr = []
-      log(sf(this.mapHash))
-      for (let i in this.mapHash) {
-        if (this.mapHash[i] === this.user) tmpArr.push({
-          from: i
-        })
+      let M = this.mapHash
+      for (let i in M) {
+        if (M[i].agent === this.user) {
+          tmpArr.push({
+            from: i,
+            msg: this.convertMsg(M[i].payload),
+            created_time: M[i].created_time
+          })
+        }
       }
       return tmpArr
-    }
-
+    },
   },
   methods: {
+
+    updateMsgList() {
+      window.msgStore.findAll({
+        from: this.nowRoster.from
+      }, {
+        to: this.nowRoster.from
+      }).fetch().subscribe(msgArr => {
+        if (this.nowRoster.from) {
+          this.msgList = msgArr
+          this.initListScroll()
+        }
+      })
+    },
     changeAgent(agent) {
-      log(sf(agent))
       mapStore.update({
         id: this.mapId,
         mapHash: Object.assign(this.mapHash, {
@@ -178,21 +195,7 @@ export default {
         id: this.nowAgent.id,
         currentRoster: m.from
       })
-      msgStore.findAll({
-        from: m.from
-      }, {
-        to: m.from
-      }).fetch().subscribe(msgArr => {
-        this.msgList = msgArr
-          // 更新未读状态
-        msgArr.forEach((m) => {
-          msgStore.update({
-            id: m.id,
-            unread: false
-          })
-        })
-      })
-      this.initListScroll()
+      this.updateMsgList()
     },
     handleInsertMsg(payload) {
       msgStore.store({
@@ -287,7 +290,6 @@ export default {
 
 
     /**[horizon初始化] */
-
     window.agentStore.watch().subscribe(arr => {
       log('客服列表更新', arr)
       this.agentList = arr
@@ -306,6 +308,11 @@ export default {
       this.mapId = mapArr[0].id
     })
 
+    window.msgStore.watch().subscribe(msgArr => {
+      if (this.nowRoster.from) {
+        this.updateMsgList()
+      }
+    })
   }
 };
 </script>

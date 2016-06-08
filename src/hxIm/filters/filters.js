@@ -1,6 +1,6 @@
 import Vue from 'vue'
 Vue.filter('time', time => {
-  return time
+  return new Date(+time).toLocaleTimeString()
 })
 
 Vue.filter('datetime', time => {

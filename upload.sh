@@ -1,6 +1,6 @@
 #! /bin/bash
 USER="root"
-PASSWORD='joplus@2016'
+PASSWORD='joplus@2018'
 
 echo '1:后台项目'
 # echo '2:www.joplus.cn'
