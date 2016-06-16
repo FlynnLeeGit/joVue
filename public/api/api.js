@@ -9,7 +9,7 @@ import restService from './restService'
 import v2RestService from './v2RestService'
 import sudokuService from './sudokuService'
 import activityService from './activityService'
-
+import v2EventService from './v2EventService'
 export {
   vipService,
   orderService,
@@ -21,5 +21,6 @@ export {
   v2CouponService,
   v2RestService,
   sudokuService,
-  activityService
+  activityService,
+  v2EventService
 }

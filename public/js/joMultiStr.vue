@@ -1,11 +1,7 @@
 <template>
   <div>
-    <!-- <p>{{strArr|json}}</p>
-<p>{{fieldsArr}}</p>
-<p>字符串 {{str}}</p>
- -->
     <jo-input v-for='f in fieldsArr' xs='12' :label="f">
-      <textarea v-model='strArr[$index]' type="text" class="form-control" rows='2'></textarea>
+      <textarea v-model='strArr[$index]' type="text" class="form-control" :rows='rows'></textarea>
     </jo-input>
   </div>
 </template>
@@ -24,6 +20,10 @@ export default {
     fields: {
       type: String,
       required: true
+    },
+    rows: {
+      type: Number,
+      default: 2
     }
   },
   components: {

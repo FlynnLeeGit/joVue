@@ -14,7 +14,7 @@ export default {
   },
   computed: {
     imgUrl() {
-      return this.source ? this.source : 'http://kefu.easemob.com/images/uikit/default_agent.png'
+      return ''
     }
   }
 };

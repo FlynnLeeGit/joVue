@@ -7,7 +7,7 @@
       </span>
     </jo-input>
     <div class="col-xs-12">
-      <button class="btn btn-success btn-sm" @click="strArr.push('')"><i class="fa fa-plus"></i>添加{{desc}}</button>
+      <button style='margin-bottom:5px' class="btn btn-success btn-sm" @click="strArr.push('')"><i class="fa fa-plus"></i>添加{{desc}}</button>
     </div>
   </div>
 </template>

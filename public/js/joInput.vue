@@ -1,6 +1,6 @@
 <template>
   <div :class="colArr">
-    <div class="input-group">
+    <div :class="sizeCls">
       <span class="input-group-addon">
           <span v-if='label'>{{label}}</span>
       <slot name='label'></slot>
@@ -13,7 +13,21 @@
 </template>
 <script>
 export default {
-  props: ['label', 'after', 'xs', 'sm', 'md', 'lg'],
+  props: {
+    label: String,
+    after: String,
+    xs: {
+      type: String,
+      default: '12'
+    },
+    sm: String,
+    md: String,
+    lg: String,
+    size: {
+      type: String,
+      default: ''
+    }
+  },
   computed: {
     xsNum() {
       return this.xs ? `col-xs-${this.xs}`.trim() : ''
@@ -29,6 +43,9 @@ export default {
     },
     colArr() {
       return [this.xsNum, this.smNum, this.mdNum, this.lgNum]
+    },
+    sizeCls() {
+      return ['input-group', this.size ? `input-group-${this.size}` : '']
     }
   }
 }

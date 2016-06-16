@@ -30,7 +30,8 @@
 export default {
   props: {
     value: {
-      required: true
+      required: true,
+      twoWay: true
     },
     ph: {
       type: String,

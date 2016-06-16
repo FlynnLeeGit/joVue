@@ -1,11 +1,4 @@
-const tabList = [
-  { title: '餐厅信息', page: 'rest-info' },
-  { title: '分店信息', page: 'rest-subshop' },
-  { title: '餐厅介绍', page: 'rest-intro' },
-  { title: '推荐菜', page: 'rest-menu' },
-  { title: '时间设置', page: 'rest-time' }
-]
-const aheadTimeOptions = [
+export const aheadTimeOptions = [
   { value: 0, text: '0' },
   { value: 240, text: '4小时' },
   { value: 360, text: '6小时' },
@@ -19,7 +12,7 @@ const aheadTimeOptions = [
   { value: 7200, text: '五天' },
   { value: 10080, text: '一周' }
 ]
-const cuisineIdOptions = [
+export const cuisineIdOptions = [
   { value: 0, text: '请选择' },
   { value: 1, text: '北美菜' },
   { value: 2, text: '创意菜' },
@@ -55,7 +48,7 @@ const convertCaozuo = () => {
   return `<button class='btn btn-default btn-xs' data-type='edit'>编辑</button> 
     <button class='btn btn-xs btn-warning' data-type='coupon'>生成优惠券</button>`
 }
-const tableOptions = {
+export const tableOptions = {
   orderBy: 'orderBy',
   asc: 1,
   columns: [
@@ -66,10 +59,4 @@ const tableOptions = {
     { th: '负责bd', field: 'bd' },
     { th: '操作', convert: convertCaozuo }
   ]
-}
-export {
-  tabList,
-  aheadTimeOptions,
-  cuisineIdOptions,
-  tableOptions
 }

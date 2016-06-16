@@ -1,12 +1,21 @@
 <template>
   <div>
     <ul class="nav nav-tabs">
-      <li @click='selectedId=$index' v-for="tab in tablist" :class="{'active':$index===selectedId}"><a href="javascript:;">{{tab.title}}</a></li>
+      <li @click='selectedId=$index' :class="{active:selectedId===$index}" v-for='t in tabsData'><a href="javascript:;">{{t.header}}</a></li>
     </ul>
+    <slot></slot>
   </div>
 </template>
 <script>
 export default {
-  props: ['tablist', 'selectedId']
+  props: {
+
+  },
+  data() {
+    return {
+      tabsData: [],
+      selectedId: 0,
+    }
+  },
 }
 </script>

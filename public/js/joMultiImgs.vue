@@ -31,8 +31,14 @@ const {
 export default {
   props: {
     imgs: {
-      required: true
+      required: true,
+      twoWay: true
     },
+    splitKey: {
+      type: String,
+      default: ','
+    }
+
   },
   data() {
     return {
@@ -52,7 +58,7 @@ export default {
       this.updateImgs()
     },
     updateImgs() {
-      this.imgs = this.imgArr.join(',')
+      this.imgs = this.imgArr.join(this.splitKey)
     },
     fileChange(e) {
 
@@ -90,7 +96,7 @@ export default {
   watch: {
     'imgs': function(newImgs) {
       if (newImgs) {
-        newImgs.indexOf(',') > -1 ? this.imgArr = newImgs.split(',') : this.imgArr.$set(0, newImgs)
+        newImgs.indexOf(this.splitKey) > -1 ? this.imgArr = newImgs.split(this.splitKey) : this.imgArr.$set(0, newImgs)
       } else {
         this.files = []
         this.imgArr = []

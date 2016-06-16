@@ -4,9 +4,9 @@
       <md-tab header='进行中'>
         <md-collections>
           <md-collection :active="nowRoster.from===m.from" @click='changeRoster(m)' icon='assignment_ind' v-for='m in chatList' :title='m.from'>
-            <p slot='primary' class="grey-text">{{m.msg}}</p>
+            <p slot='primary' class="grey-text">{{m.payload| typeMsg}}</p>
             <p slot='secondary'>{{m.created_time | time}}
-              <br /><span class="new badge">0</span>
+              <br /><span v-show='m.unreadNum' class="new badge">{{m.unreadNum}}</span>
             </p>
           </md-collection>
         </md-collections>
@@ -27,22 +27,26 @@
   <div id="modal1" class="modal">
     <div class="modal-content">
       <h4>客服列表 请选择</h4>
-      <md-btn v-show='agent.user!==nowAgent.user' @click='changeAgent(agent)' v-for='agent in agentList' theme='indigo modal-action modal-close' icon='perm_identity'>{{agent.user}}</md-btn>
+      <md-btn v-show='agent.user!==nowAgent.user && agent.online' @click='changeAgent(agent)' v-for='agent in agentList' theme='indigo modal-action modal-close' icon='perm_identity'>{{agent.user}}</md-btn>
     </div>
   </div>
   <!-- 模态窗结束 -->
   <!-- 聊天信息部分-->
   <div class="chat-area">
     <div class="row">
-      <div class="col s6">
-        <label>最大接待人数</label>
+      <div v-if='nowAgent' class="col s4">
+        <label>最大接待</label>
         <select @change='updateMaxCallin($event)' class="browser-default">
-          <option v-for='n in 20' :value='n+1' :selected='nowAgent.maxCallin==n+1'>{{n+1}}人</option>
+          <option v-for='n in 20' :value='n+1' :selected='nowAgent.maxCallin===n+1'>{{n+1}}人</option>
         </select>
       </div>
-      <div v-show='nowRoster.from' class="col s6">
+      <div v-show='nowRoster.from' class="col s4">
         <label>转接客服</label>
         <a class="waves-effect waves-light btn modal-trigger" href="#modal1">转接</a>
+      </div>
+      <div v-if='nowAgent' class="col s4">
+        <label>是否上线</label>
+        <a @click='toggleOnline' :class="['waves-effect','waves-light','btn',nowAgent.online?'indigo':'grey']">{{nowAgent.online?'ON':'OFF'}}</a>
       </div>
     </div>
     <div v-el:msglist class="msg-list">
@@ -111,119 +115,125 @@ export default {
   },
   data() {
     return {
-      /** [horizon变量] */
-      agentList: [],
-      allMsgList: [],
-      nowAgent: {},
-      msgList: [],
-      mapHash: {},
-      mapId: null,
-
-      /** [本地变量] */
-      showEmoji: false,
-      emojoList: {},
-      msg: '',
       nowRoster: {},
-
-      notifyAudio: require('../../static/msg.mp3'),
+      nowAgent: {},
+      mapObj: {},
+      msgList: [],
+      agentList: [],
+      msg: '',
+      showEmoji: false,
       user: JSON.parse(localStorage.getItem('token')).user
     };
   },
   computed: {
-    iframeSrc() {
-      return `http://crm.joplus.cn/im/?visitorImId=${this.nowRoster.from}`
+    mapHash() {
+      return this.mapObj.mapHash
     },
     chatList() {
-      let tmpArr = []
+      let tmpObj = {}
       let M = this.mapHash
       for (let i in M) {
-        if (M[i].agent === this.user) {
-          tmpArr.push({
-            from: i,
-            msg: this.convertMsg(M[i].payload),
-            created_time: M[i].created_time
-          })
+        if (M[i].to === this.user) {
+          tmpObj[i] = M[i]
         }
       }
-      return tmpArr
+      return tmpObj
     },
+    nowAgent() {
+      return this.agentList.filter(agent => agent.user === this.user)[0]
+    }
   },
   methods: {
+    toggleOnline() {
+      agentStore.update({
+        id: this.nowAgent.id,
+        online: !this.nowAgent.online
+      })
+    },
+    sendMsg() {
+      conn.sendTextMessage({
+        to: this.nowRoster.from,
+        msg: this.msg,
+      })
+      this.handleInsertMsg({
+        type: 'txt',
+        msg: this.msg
+      })
+      this.msg = ''
+    },
+    sendImg() {
 
-    updateMsgList() {
+
+    },
+    sendAudio() {
+
+
+    },
+    handleInsertMsg(payload) {
+      msgStore.store({
+        modified_time: new Date().getTime(),
+        from: this.user,
+        to: this.nowRoster.from,
+        unread: false,
+        payload,
+      })
+    },
+    changeAgent(newAgent) {
+      let newMapObj = Object.assign({}, this.mapObj)
+      newMapObj.mapHash[this.nowRoster.from].to = newAgent.user
+      mapStore.update(newMapObj)
+
+      let newAgentObj = Object.assign({}, this.nowAgent)
+      newAgentObj.currentRoster = 0
+      agentStore.update(newAgentObj)
+
+      this.msgList = []
+      this.nowRoster = {}
+    },
+    updateMaxCallin(e) {
+      agentStore.update({
+        id: this.nowAgent.id,
+        maxCallin: +e.target.value
+      })
+    },
+    changeRoster(r) {
+      this.nowRoster = r
+
+      let newMapObj = Object.assign({}, this.mapObj)
+      newMapObj.mapHash[r.from].unreadNum = 0
+      mapStore.update(newMapObj)
+
+      let newAgentObj = Object.assign({}, this.nowAgent)
+      newAgentObj.currentRoster = r.from
+      agentStore.update(newAgentObj)
+
+
+      this.getMsgList()
+
+    },
+    getMsgList(from) {
       window.msgStore.findAll({
         from: this.nowRoster.from
       }, {
         to: this.nowRoster.from
       }).fetch().subscribe(msgArr => {
-        if (this.nowRoster.from) {
-          this.msgList = msgArr
-          this.initListScroll()
-        }
-      })
-    },
-    changeAgent(agent) {
-      mapStore.update({
-        id: this.mapId,
-        mapHash: Object.assign(this.mapHash, {
-          [this.nowRoster.from]: agent.user
-        })
-      })
-    },
-    convertMsg(payload) {
-      switch (payload.type) {
-        case 'txt':
-          return payload.msg
-        case 'img':
-          return '[图片信息]'
-        case 'audio':
-          return '[音频信息]'
-        default:
-          return ''
-      }
-    },
-    updateMaxCallin(e) {
-      agentStore.update({
-        id: this.nowAgent.id,
-        maxCallin: e.target.value,
-      })
-    },
-    changeRoster(m) {
-      this.nowRoster = m
-        // 修改当前客户接待人
-      agentStore.update({
-        id: this.nowAgent.id,
-        currentRoster: m.from
-      })
-      this.updateMsgList()
-    },
-    handleInsertMsg(payload) {
-      msgStore.store({
-        from: this.user,
-        to: this.nowRoster.from,
-        modified_time: new Date().getTime(),
-        agent: this.user,
-        payload,
-      })
-    },
-    sendMsg() {
-      if (this.msg) {
-        conn.sendTextMessage({
-          to: this.nowRoster.from,
-          msg: this.msg,
-        })
-        this.handleInsertMsg({
-          type: 'txt',
-          msg: this.msg
-        })
-
-        this.msg = ''
+        this.msgList = msgArr
         this.initListScroll()
-      }
+        let tmpArr = []
+        msgArr.forEach(msg => {
+          if (msg.unread) {
+            msg.unread = false
+            tmpArr.push(msg)
+          }
+        })
+        msgStore.update(tmpArr)
+      })
     },
     initListScroll() {
       this.$nextTick(() => {
-        this.$els.msglist.scrollTop = 99999
+        if (this.$els.msglist) {
+          this.$els.msglist.scrollTop = 99999
+        }
       })
     },
     toggleEmoji() {
@@ -236,46 +246,8 @@ export default {
       this.msg += eKey
       this.$els.inputmsg.focus()
     },
-    sendImg() {
-      let imgFileList = document.getElementById('img').files
-      let imgObj = Easemob.im.Helper.getFileUrl('img')
-      conn.sendPicture({
-        fileInputId: 'img',
-        to: this.nowRoster.from,
-        onFileUploadError: e => {
-          log(e)
-        },
-        onFileUploadComplete: data => {
-          log(data)
-          this.handleInsertMsg({
-            type: 'img',
-            url: `${data.uri}/${data.entities[0].uuid}`
-          })
-          this.initListScroll()
-        }
-      })
-    },
-    sendAudio() {
-      let audioObj = Easemob.im.Helper.getFileUrl('audio')
-      log(audioObj)
-      conn.sendAudio({
-        fileInputId: 'audio',
-        to: this.nowRoster.from,
-        onFileUploadComplete: data => {
-
-          this.initListScroll()
-        },
-        onFileUploadError: e => {
-          log(e)
-        }
-      })
-    },
   },
-
   ready() {
-
-    this.initListScroll()
-
     this.emojiList = Easemob.im.Helper.EmotionPicData
 
     $(document).ready(function() {
@@ -283,36 +255,22 @@ export default {
       $('.modal-trigger').leanModal();
     });
 
-    // 通知api
-    window.Notification.requestPermission((per) => {
-      if (per !== 'granted') window.alert('您还未启用通知功能!')
-    })
 
-
-    /**[horizon初始化] */
-    window.agentStore.watch().subscribe(arr => {
-      log('客服列表更新', arr)
-      this.agentList = arr
-    })
-
-    window.agentStore.find({
-        user: this.user
-      }).watch().subscribe(nowAgent => {
-        this.nowAgent = nowAgent
-      })
-      /**[初始信息获取]*/
 
     window.mapStore.watch().subscribe(mapArr => {
-      log('映射表更新')
-      this.mapHash = mapArr[0].mapHash
-      this.mapId = mapArr[0].id
+      this.mapObj = mapArr[0]
+      log('新消息进入')
     })
 
     window.msgStore.watch().subscribe(msgArr => {
-      if (this.nowRoster.from) {
-        this.updateMsgList()
-      }
+      if (this.nowRoster.from) this.getMsgList()
     })
+
+    window.agentStore.watch().subscribe(agentArr => {
+      this.agentList = agentArr
+      log('客服列表更新')
+    })
+
   }
 };
 </script>

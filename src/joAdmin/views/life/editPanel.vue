@@ -1,8 +1,17 @@
 <template>
   <modal :show.sync='show' effect='fade' :large='true' :callback='confirmEdit' title='编辑商家'>
     <div class="modal-body" slot='modal-body'>
-      <jo-tabs :tablist='tablist' :selected-id.sync='selectedId'></jo-tabs>
-      <component keep-alive :data.sync='editData' :is='tablist[selectedId].page'></component>
+      <jo-tabs>
+        <jo-tab header='生活类型'>
+          <life-type :data='editData'></life-type>
+        </jo-tab>
+        <jo-tab header='分店信息'>
+          <life-subshop :data='editData'></life-subshop>
+        </jo-tab>
+        <jo-tab header='生活介绍'>
+          <life-intro :data='editData'></life-intro>
+        </jo-tab>
+      </jo-tabs>
     </div>
   </modal>
 </template>
@@ -12,6 +21,7 @@ import {
 } from './lifeOpts'
 import {
   joTabs,
+  joTab,
   modal
 } from 'jo'
 import {
@@ -38,6 +48,7 @@ export default {
   components: {
     modal,
     joTabs,
+    joTab,
     lifeType,
     lifeSubshop,
     lifeIntro
@@ -45,7 +56,6 @@ export default {
   data() {
     return {
       tablist,
-      selectedId: 0,
       editData: {}
     }
   },

@@ -2,7 +2,7 @@
   <div>
     <nav>
       <div :class="['nav-wrapper','z-depth-3',mainColor,]">
-        <a v-link="{path:'/'}" class="brand-logo center">环信即时通讯客户端</a>
+        <a v-link="{path:'/'}" class="brand-logo center">环信即时通讯客户端 {{user}}</a>
       </div>
     </nav>
     <div class="load-panel" v-if='showLoading'>
@@ -31,6 +31,7 @@ export default {
     return {
       mainColor: 'teal',
       showLoading: false,
+      user: JSON.parse(localStorage.getItem('token')).user
     }
   }
 }

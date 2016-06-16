@@ -29,12 +29,14 @@ export default {
   },
   data() {
     return {
+      msg: '12345',
       showAdd: false,
       showEdit: false,
       memberTableOpts,
       refreshList: 0,
       datalist: [],
-      selectedRecord: {}
+      selectedRecord: {},
+      htmlString: ''
     }
   },
   asyncData(resolve, reject) {
@@ -43,6 +45,9 @@ export default {
     }))
   },
   methods: {
+    paste() {
+      this.htmlString = ''
+    },
     tableClick(e, row, type) {
       if (type === 'edit') this.handleEdit(row)
     },

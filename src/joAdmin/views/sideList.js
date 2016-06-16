@@ -5,15 +5,17 @@ const sectionSide = {
     { title: '管家服务', path: 'ServiceList', icon: 'fa-heart', shortcut: 'alt+2' },
     { title: '管家合作商', path: 'PartnerList', icon: 'fa-globe', shortcut: 'alt+3' },
     { title: '九宫格管理', path: 'SudokuList', icon: 'fa-table', shortcut: 'alt+4' },
-    { title: '活动管理', path: 'ActivityList', icon: 'fa-leaf', shortcut: 'alt+5' }
+    { title: '宣传活动管理', path: 'ActivityList', icon: 'fa-leaf', shortcut: 'alt+5' },
   ]
 }
+
 const orderSide = {
   header: '订单管理',
   subPage: [
     { title: '全部订单', path: 'OrderList', icon: 'fa-list', shortcut: 'alt+6', },
     { title: '不等位/待排队', path: 'OrderList_rest', icon: 'fa-cutlery', shortcut: 'alt+7', },
     { title: '生活服务订单', path: 'OrderList_life', icon: 'fa-hand-peace-o', shortcut: 'alt+8', },
+    { title: '活动订单', path: 'OrderList_event', icon: 'fa-plus', shortcut: 'alt+9', },
     { title: '会员订单', path: 'OrderList_member', icon: 'fa-child', shortcut: 'alt+9', }
   ]
 }
@@ -37,7 +39,8 @@ const rest_lifeSide = {
   header: '录入板块',
   subPage: [
     { title: '餐厅列表', path: 'RestList', icon: 'fa-glass', shortcut: 'alt+g', },
-    { title: '生活服务列表', path: 'LifeList', icon: 'fa-black-tie', shortcut: 'alt+h', }
+    { title: '生活服务列表', path: 'LifeList', icon: 'fa-black-tie', shortcut: 'alt+h', },
+    { title: '活动录入', path: 'EventList', icon: 'fa-black-tie', shortcut: 'alt+i', }
   ]
 }
 

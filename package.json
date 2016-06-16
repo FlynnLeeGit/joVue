@@ -4,7 +4,7 @@
   "description": "demo",
   "main": "index.js",
   "scripts": {
-    "dev1": "rm -rf dist && webpack-dev-server --inline --hot  --host 0.0.0.0 --dev --p1",
+    "dev1": "rm -rf dist && webpack-dev-server --inline --hot  --host 0.0.0.0 --dev --p1 --progress",
     "dev2": "rm -rf dist && webpack-dev-server --inline --hot  --host 0.0.0.0 --port 4000 --p2",
     "devs": "rm -rf dist && webpack-dev-server --https --dev --inline --hot --progress --host 0.0.0.0 ",
     "build1": "rm -rf dist && webpack --progress --hide-modules --production --p1",

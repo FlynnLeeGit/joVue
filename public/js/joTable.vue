@@ -86,7 +86,8 @@ export default {
   },
   methods: {
     trclick($event, row) {
-      this.$dispatch('trclick', $event, row, $event.target.dataset.type)
+      let type = $event.target.dataset.type
+      if (type) this.$dispatch('trclick', $event, row, type)
     },
     multiFields(row, col) {
       if (col.field.indexOf('@') !== -1) { // 多字段拼接方法

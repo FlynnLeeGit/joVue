@@ -22,5 +22,11 @@ export default {
     component: resolve => {
       require(['../views/order/OrderList_member'], resolve)
     }
+  },
+  'OrderList_event': {
+    name: 'OrderList_event',
+    component: resolve => {
+      require(['../views/order/OrderList_event'], resolve)
+    }
   }
 }

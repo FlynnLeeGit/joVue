@@ -20,7 +20,7 @@
         <option v-for='status in orderStatusOptions' :value="status.value">{{status.text}}</option>
       </select>
     </jo-input>
-    <jo-input sm="4" label="用户类型">
+    <jo-input sm="4" label="会员类型">
       <select v-model='searchData.isVip' class="form-control">
         <option v-for='p in orderVipOptions' :value="p.value">{{p.text}}</option>
       </select>

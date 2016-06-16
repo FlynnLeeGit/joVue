@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="text-right plus-btn-area">
+    <p>
       <button @click='addSubshop' class="btn btn-info">
         <i class="fa fa-plus"></i> 添加分店
       </button>
-    </div>
+    </p>
     <div class="row" v-for='sub in data.subshops'>
       <h5 class="text-center">
       分店{{$index+1}}
@@ -69,12 +69,6 @@ export default {
 }
 </script>
 <style>
-.plus-btn-area {
-  position: relative;
-  margin-top: -12px;
-  margin-bottom: 3px;
-}
-
 .input-group {
   margin: 3px 0;
 }

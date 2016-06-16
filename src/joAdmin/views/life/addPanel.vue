@@ -1,23 +1,31 @@
 <template>
   <modal :show.sync='show' effect='fade' :large='true' :callback='confirmAdd' title='添加商家'>
     <div class="modal-body" slot='modal-body'>
-      <jo-tabs :tablist='tablist' :selected-id.sync='selectedId'></jo-tabs>
-      <component keep-alive :data.sync='addData' :is='tablist[selectedId].page'></component>
+      <jo-tabs :data.sync='addData'>
+        <jo-tab header='生活类型'>
+          <life-type :data='addData'></life-type>
+        </jo-tab>
+        <jo-tab header='分店信息'>
+          <life-subshop :data='addData'></life-subshop>
+        </jo-tab>
+        <jo-tab header='生活介绍'>
+          <life-intro :data='addData'></life-intro>
+        </jo-tab>
+      </jo-tabs>
     </div>
   </modal>
 </template>
 <script>
 import {
+  modal,
   joTabs,
-  modal
+  joTab,
 } from 'jo'
 
 import lifeIntro from './_lifeIntro'
 import lifeSubshop from './_lifeSubshop'
 import lifeType from './_lifeType'
-import {
-  tablist
-} from './lifeOpts'
+
 import {
   lifeService
 } from 'api'
@@ -25,19 +33,18 @@ export default {
   props: ['show', 'reload'],
   components: {
     modal,
-    joTabs,
     lifeIntro,
     lifeSubshop,
-    lifeType
+    lifeType,
+    joTabs,
+    joTab
   },
   data() {
     return {
-      tablist,
       addData: {
         subshops: [],
         contents: []
       },
-      selectedId: 0
     }
   },
   methods: {

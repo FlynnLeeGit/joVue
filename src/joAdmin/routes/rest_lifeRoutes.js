@@ -11,4 +11,10 @@ export default {
       require(['../views/life/LifeList'], resolve)
     }
   },
+  '/EventList': {
+    name: 'EventList',
+    component: resolve => {
+      require(['../views/event/EventList'], resolve)
+    }
+  },
 }

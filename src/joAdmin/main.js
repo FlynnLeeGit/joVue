@@ -13,6 +13,7 @@ Vue.filter('limitPage', limitPage)
 Vue.filter('orderByChs', orderByChs)
 Vue.filter('orderTypeToString', orderTypeToString)
 
+
 Vue.config.debug = process.env.DEBUG
 
 

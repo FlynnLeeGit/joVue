@@ -11,11 +11,11 @@ export default {
     },
     //插入会员
     insertVip(memberData) {
-      return joFetch.post(`${vipServer}/member/update`, { member: JSON.stringify(memberData) })
+      return joFetch.post(`${vipServer}/insert`, { member: JSON.stringify(memberData) })
     },
     //更新会员
     updateVip(memberData) {
-      return this.insertVip(memberData)
+      return joFetch.post(`${vipServer}/member/update`, { member: JSON.stringify(memberData) })
     },
 
     /** [partner Section>Partner] */

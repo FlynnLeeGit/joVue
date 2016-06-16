@@ -7,17 +7,6 @@ export const orderStatusOptions = [
   { value: 100005, text: '已失效' },
   { value: 100006, text: '已退款' }
 ]
-export const orderTypeOptions = [
-  { value: '', text: '全部' },
-  { value: 1, text: '不等位' },
-  { value: 2, text: '待排队' },
-  { value: '医院', text: '医院' },
-  { value: '蛋糕', text: '蛋糕' },
-  { value: '票务', text: '票务' },
-  { value: '鲜花', text: '鲜花' },
-  { value: '酒管家', text: '酒管家' },
-  { value: '预约专家', text: '预约专家' }
-]
 
 export const orderVipOptions = [
   { value: '', text: '全部' },
@@ -88,89 +77,37 @@ export const tableOptions = {
   orderBy: 'orderDate',
   asc: -1,
   nowrap: true,
-  columns: [{
-    th: '订单类型',
-    field: 'orderType',
-    convert: convertOrderType
-  }, {
-    th: '下单时间',
-    field: 'orderDate'
-  }, {
-    th: '手机号',
-    field: 'orderPhone'
-  }, {
-    th: '称谓',
-    field: 'bookerName@bookerSex@personNum',
-    merge: mergeNameSex
-  }, {
-    th: '会员等级',
-    field: 'memberLevel',
-  }, {
-    th: '订单金额',
-    field: 'orderMoney',
-    convert: convertPrice
-  }, {
-    th: '实付金额',
-    field: 'paidMoney',
-    convert: convertPrice
-  }, {
-    th: '订单状态',
-    field: 'orderStatus',
-    convert: convertStatus
-  }, {
-    th: '订单编号',
-    field: 'orderNo'
-  }, ]
+  columns: [
+    { th: '订单类型', field: 'orderType', convert: convertOrderType },
+    { th: '下单时间', field: 'orderDate' },
+    { th: '手机号', field: 'orderPhone' },
+    { th: '称谓', field: 'bookerName@bookerSex@personNum', merge: mergeNameSex },
+    { th: '会员等级', field: 'memberLevel', },
+    { th: '订单金额', field: 'orderMoney', convert: convertPrice },
+    { th: '实付金额', field: 'paidMoney', convert: convertPrice },
+    { th: '订单状态', field: 'orderStatus', convert: convertStatus },
+    { th: '订单编号', field: 'orderNo' },
+  ]
 }
 export const tableRestOptions = {
   nowrap: true,
   orderBy: 'orderDate',
   asc: -1,
-  columns: [{
-    th: '订单类型',
-    field: 'orderType',
-    convert: convertOrderType
-  }, {
-    th: '下单时间',
-    field: 'orderDate'
-  }, {
-    th: '手机orderPhone',
-    field: 'orderPhone'
-  }, {
-    th: '会员',
-    field: 'isVip',
-    convert: convertVip
-  }, {
-    th: '餐厅',
-    field: 'restName'
-  }, {
-    th: '预约时间',
-    field: 'eatDate'
-  }, {
-    th: '称谓/人数',
-    field: 'bookerName@bookerSex@personNum',
-    merge: mergeNameSexNum
-  }, {
-    th: '预约手机bookerPhone',
-    field: 'bookerPhone'
-  }, {
-    th: '状态',
-    field: 'orderStatus',
-    convert: convertStatus
-  }, {
-    th: '客服',
-    field: 'isDeal',
-    convert: convertDeal
-  }, {
-    th: '操作',
-    convert: convertOpt
-  }, {
-    th: '备注',
-    field: 'memo'
-  }, {
-    th: '订单编号',
-    field: 'orderNo'
-  }, ]
+  columns: [
+    { th: '订单类型', field: 'orderType', convert: convertOrderType },
+    { th: '下单时间', field: 'orderDate' },
+    { th: '手机orderPhone', field: 'orderPhone' },
+    { th: '会员', field: 'isVip', convert: convertVip },
+    { th: '餐厅', field: 'restName' },
+    { th: '预约时间', field: 'eatDate' },
+    { th: '称谓/人数', field: 'bookerName@bookerSex@personNum', merge: mergeNameSexNum },
+    { th: '预约手机bookerPhone', field: 'bookerPhone' },
+    { th: '状态', field: 'orderStatus', convert: convertStatus },
+    { th: '客服', field: 'isDeal', convert: convertDeal },
+    { th: '操作', convert: convertOpt },
+    { th: '备注', field: 'memo' },
+    { th: '订单编号', field: 'orderNo' },
+  ]
 }
 const convertDetail = () => {
   return `<button class='btn btn-xs btn-default' data-type='detail'>订单详情</button>`
@@ -179,82 +116,55 @@ export const tableLifeOptions = {
   nowrap: true,
   orderBy: 'orderDate',
   asc: -1,
-  columns: [{
-    th: '订单详情',
-    field: 'orderType',
-    convert: convertDetail
-  }, {
-    th: '订单类型',
-    field: 'orderType',
-    convert: convertOrderType
-  }, {
-    th: '下单时间',
-    field: 'orderDate'
-  }, {
-    th: '称谓',
-    field: 'bookerName@bookerSex@personNum',
-    merge: mergeNameSexNum
-  }, {
-    th: '手机orderPhone',
-    field: 'orderPhone'
-  }, {
-    th: '下单金额',
-    field: 'orderMoney',
-    convert: convertPrice
-  }, {
-    th: '实付金额',
-    field: 'paidMoney',
-    convert: convertPrice
-  }, {
-    th: '会员',
-    field: 'isVip',
-    convert: convertVip
-  }, {
-    th: '状态',
-    field: 'orderStatus',
-    convert: convertStatus
-  }, {
-    th: '客服',
-    field: 'isDeal',
-    convert: convertDeal
-  }, {
-    th: '操作',
-    convert: convertOpt
-  }, {
-    th: '备注',
-    field: 'memo'
-  }, {
-    th: '订单编号',
-    field: 'orderNo'
-  }, ]
+  columns: [
+    { th: '订单详情', field: 'orderType', convert: convertDetail },
+    { th: '订单类型', field: 'orderType', convert: convertOrderType },
+    { th: '下单时间', field: 'orderDate' },
+    { th: '称谓', field: 'bookerName@bookerSex@personNum', merge: mergeNameSexNum },
+    { th: '手机orderPhone', field: 'orderPhone' },
+    { th: '下单金额', field: 'orderMoney', convert: convertPrice },
+    { th: '实付金额', field: 'paidMoney', convert: convertPrice },
+    { th: '会员', field: 'isVip', convert: convertVip },
+    { th: '状态', field: 'orderStatus', convert: convertStatus },
+    { th: '客服', field: 'isDeal', convert: convertDeal },
+    { th: '操作', convert: convertOpt },
+    { th: '备注', field: 'memo' },
+    { th: '订单编号', field: 'orderNo' },
+  ]
 }
 
 export const tableMemberOpts = {
   nowrap: true,
-  columns: [{
-    th: '购买类型',
-    field: 'buyWay'
-  }, {
-    th: '会员描述',
-    field: 'memberLevel'
-  }, {
-    th: '会员价格',
-    field: 'memberMoney'
-  }, {
-    th: '下单手机号',
-    field: 'orderPhone'
-  }, {
-    th: '下单时间',
-    field: 'orderDate'
-  }, {
-    th: '支付金额',
-    field: 'orderMoney',
-    convert: convertPrice
-  }, {
-    th: '支付方式',
-    field: 'vipWay'
-  }, {
-    th: '订单编号',
-    field: 'orderNo'
-  }]
+  columns: [
+    { th: '购买类型', field: 'buyWay' },
+    { th: '会员描述', field: 'memberLevel' },
+    { th: '会员价格', field: 'memberMoney' },
+    { th: '下单手机号', field: 'orderPhone' },
+    { th: '下单时间', field: 'orderDate' },
+    { th: '支付金额', field: 'orderMoney', convert: convertPrice },
+    { th: '支付方式', field: 'vipWay' },
+    { th: '订单编号', field: 'orderNo' }
+  ]
+}
+
+const mergeEventType = (first, second, start, end) => {
+  log(first, second, start, end)
+  return first
+}
+export const tableEventOpts = {
+  nowrap: true,
+  columns: [
+    { th: '下单时间', field: 'orderDate' },
+    { th: '下单手机号', field: 'orderPhone' },
+    { th: '会员类别', field: 'memberLevel' },
+    { th: '活动名称', field: 'name' },
+    { th: '活动场次类型', field: 'firstLabelContent@secondLabelContent@eventStartDate@eventEndDate', merge: mergeEventType },
+    { th: '座位', field: 'eventTicket' },
+    { th: '称谓', field: 'bookerName@bookerSex', merge: mergeNameSex },
+    { th: '详细信息', convert: convertDetail },
+    { th: '订单状态', field: 'orderStatus', convert: convertStatus },
+    { th: '支付方式', field: 'vipWay' },
+    { th: '支付金额', field: 'orderMoney', convert: convertPrice },
+    { th: '订单编号', field: 'orderNo' },
+  ]
 }
