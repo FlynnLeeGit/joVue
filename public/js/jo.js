@@ -16,7 +16,6 @@ export const joAlert = require('./joAlert') // 通知框
 export const joTabs = require('./joTabs') // 标签页父级
 export const joTab = require('./joTab') // 子标签页
 export const joOrder = require('./joOrder') // 排序控件
-export const joCalendar = require('./joCalendar') //日历组件
   //改进的模态框
 export const modal = require('./vue-strap/Modal')
   // 函数

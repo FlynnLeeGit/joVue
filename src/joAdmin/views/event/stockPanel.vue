@@ -1,15 +1,24 @@
 <template>
-  <modal :callback='confirm' :large='true' title='长时间活动库存编辑' :show.sync='show'>
+  <modal :callback='confirm' :large='true' :show.sync='show'>
+    <div class="modal-header" slot='modal-header'>
+      <h4>长时间活动库存编辑
+      	<jo-loading :loading='$loadingAsyncData'></jo-loading>
+      </h4>
+    </div>
     <div class="modal-body row" slot='modal-body'>
-      {{eventId}} {{updateArray|json}}
       <stock-panel-calendar :data='stockData' :update-array='updateArray'></stock-panel-calendar>
+      {{updateArray|json}}
     </div>
   </modal>
 </template>
 <script>
 import {
   modal,
+  joLoading,
 } from 'jo'
+import {
+  v2EventService
+} from 'api'
 import stockPanelCalendar from './stockPanel_calendar'
 export default {
   props: {
@@ -18,6 +27,7 @@ export default {
   },
   components: {
     modal,
+    joLoading,
     stockPanelCalendar
   },
   data() {
@@ -37,31 +47,10 @@ export default {
     }
   },
   asyncData(resolve, reject) {
-    let tmp = {}
-    for (let i = 5; i < 28; i++) {
-      tmp[`2016-06-${i<10?'0'+i:i}`] = {
-        stockList: [{
-          labelContent: '标签1',
-          stockNum: 30,
-          stockId: i + '',
-          stockStatus: '1',
-        }, {
-          labelContent: '标签2',
-          stockNum: 20,
-          stockId: i + '',
-          stockStatus: '1',
-        }, {
-          labelContent: '标签3',
-          stockNum: 20,
-          stockId: i + '',
-          stockStatus: '1',
-        }]
-      }
-    }
-
-    resolve({
-      stockData: tmp
-    })
+    v2EventService.getLongTimeStock(this.eventId)
+      .then(stockData => resolve({
+        stockData
+      }))
   }
 }
 </script>

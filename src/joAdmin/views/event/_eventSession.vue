@@ -1,5 +1,7 @@
 <template>
   <div>
+    被删除{{deleteSession|json}} 被删除{{deleteType|json}}
+    <!-- 现有数据 {{sessionData|json}} -->
     <div v-if='showSession'>
       <h3 class="text-center text-info">当前为{{isShort?'场次活动':'长期活动(只能有一种场次)'}}</h3>
       <div class="row" v-for='session in sessionData'>
@@ -37,7 +39,7 @@
             </jo-input>
           </div>
           <!-- 票务类型库存组件 -->
-          <event-session-stock :type-data='session.eventTypeLabel' :session-index='$index'></event-session-stock>
+          <event-session-stock :type-data='session.eventTypeLabel' :session-index='$index' :delete-type='deleteType'></event-session-stock>
         </div>
       </div>
       <p class="text-center">
@@ -64,6 +66,14 @@ export default {
       type: Array,
       required: true
     },
+    deleteSession: {
+      type: Array,
+      default: () => []
+    },
+    deleteType: {
+      type: Array,
+      default: () => []
+    },
     type: null
   },
   components: {
@@ -73,7 +83,7 @@ export default {
   },
   data() {
     return {
-      eventPriceList: []
+      eventPriceList: [],
     }
   },
   methods: {
@@ -85,18 +95,20 @@ export default {
       }
     },
     delSession($index) {
-      this.sessionData.splice($index, 1)
+      let deletedItem = this.sessionData.splice($index, 1)[0]
+      if (deletedItem.labelId) this.deleteSession.push(deletedItem.labelId)
+
     }
   },
   computed: {
     isLong() {
-      return this.type === '1'
+      return this.type === 1
     },
     isShort() {
-      return this.type === '0'
+      return this.type === 0
     },
     showSession() {
-      return this.type === '0' || this.type === '1'
+      return this.type === 0 || this.type === 1
     }
   },
   // 异步获取会员类型

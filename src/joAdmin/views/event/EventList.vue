@@ -51,27 +51,7 @@ export default {
       //排序显示
       showOrder: false,
       selectedEventId: 0,
-      eventList: [{
-        eventId: '1',
-        orderBy: 1,
-        name: '12445'
-      }, {
-        eventId: '2',
-        orderBy: 2,
-        name: '112312323'
-      }, {
-        eventId: '3',
-        orderBy: 4,
-        name: '123123'
-      }, {
-        eventId: '4',
-        orderBy: 7,
-        name: '121233'
-      }, {
-        eventId: '5',
-        orderBy: 9,
-        name: '1233123'
-      }],
+      eventList: [],
     }
   },
   methods: {

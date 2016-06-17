@@ -37,6 +37,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "html-webpack-plugin": "^2.15.0",
     "isomorphic-fetch": "^2.2.1",
+    "node-args": "^1.0.02",
     "open-browser-webpack-plugin": "^0.0.2",
     "url-loader": "^0.5.7",
     "vue": "^1.0.21",
@@ -44,7 +45,6 @@
     "vue-loader": "^8.2.3",
     "vue-router": "^0.7.13",
     "vue-strap": "^1.0.7",
-    "vue-style-loader": "^1.0.0",
-    "vuex": "^0.6.3"
+    "vue-style-loader": "^1.0.0"
   }
 }

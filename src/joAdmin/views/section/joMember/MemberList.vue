@@ -6,12 +6,16 @@
     <member-panel v-if="showAdd" :show.sync="showAdd" mode="add" :refresh-list.sync='refreshList'></member-panel>
     <member-panel v-if="showEdit" :show.sync="showEdit" :data='selectedRecord' mode="edit" :refresh-list.sync='refreshList'></member-panel>
     <jo-table :data="datalist" @trclick='tableClick' :option='memberTableOpts'></jo-table>
+    <jo-input label='123' after='3'>
+      <input type="text" value='123' class="form-control">
+    </jo-input>
   </div>
 </template>
 <script>
 import {
   joTable,
-  joLoading
+  joLoading,
+  joInput
 } from 'jo'
 import {
   vipService
@@ -25,6 +29,7 @@ export default {
   components: {
     memberPanel,
     joTable,
+    joInput,
     joLoading
   },
   data() {

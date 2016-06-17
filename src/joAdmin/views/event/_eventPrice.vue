@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- {{priceData|json}} -->
+    {{priceData|json}}
     <div class="row">
       <div class="col-xs-2">
         <button @click='addCol' class="pull-right btn btn-success btn-sm" style='margin-top:30px' class="">添加一列</button>
@@ -8,7 +8,7 @@
       </div>
       <div class="col-xs-9">
         <button @click="addRow" class="btn btn-success btn-sm">添加一行</button>
-        <table class="table table-bordered ">
+        <table class="table table-bordered">
           <tr v-for='row in priceData' track-by='$index'>
             <td v-for='item in row' track-by='$index'>
               <input class="form-control " type="text" placeholder="typeSomething" v-model='item'>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <span class="text-info">{{ticketData.labelContent}}</span>
-    <input type="number" class="form-control input-sm" v-model='ticketData.stockNum' :disabled="ticketData.stockStatus==='0'">
+    <input type="number" class="form-control input-sm" v-model='ticketData.stockNum' min="0" :disabled="ticketData.stockStatus===0">
   </div>
 </template>
 <script>

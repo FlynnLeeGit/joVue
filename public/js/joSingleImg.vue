@@ -26,6 +26,7 @@ const {
 export default {
   props: {
     img: {
+      twoWay: true,
       required: true
     },
     label: {

@@ -8,8 +8,8 @@
     </jo-input>
     <jo-input label="场次类型?" sm="6" md='4'>
       <select v-model='data.type' class="form-control" :disabled='isEdit'>
-        <option value='0'>场次活动(使用场次标签)</option>
-        <option value='1'>长时间活动(用于票务 使用时间挂历)</option>
+        <option :value='0'>场次活动(使用场次标签)</option>
+        <option :value='1'>长时间活动(用于票务 使用时间挂历)</option>
       </select>
     </jo-input>
     <jo-input label="活动关联服务" sm="6" md='4'>

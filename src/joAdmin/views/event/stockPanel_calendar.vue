@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- {{data|json}} -->
     <h3 class="calendar-title">
     	<button @click='monthLeft' class="btn btn-default">
       		<i class="fa fa-arrow-left"></i>上一月
@@ -56,7 +55,7 @@ export default {
     changeStockStatus(stockObj) {
       // 更新所有ticket的状态
       stockObj.stockList.forEach(item => {
-        item.stockStatus = item.stockStatus === '1' ? '0' : '1'
+        item.stockStatus = item.stockStatus === 1 ? 0 : 1
       })
     },
     calc(num) {
@@ -107,7 +106,7 @@ export default {
     isValid(day) {
       let s = this.getStockObj(day).stockList
       if (s) {
-        return s.every(item => item.stockStatus === '1')
+        return s.every(item => item.stockStatus === 1)
       }
       return false
     },

@@ -1,5 +1,7 @@
 <template>
   <div>
+    <!-- {{typeData|json}} -->
+    <!-- 删除{{deletedTypeData|json}} -->
     <div class="row" v-for='t in typeData'>
       <div class="col-xs-12">
         <div>
@@ -33,6 +35,9 @@ export default {
     },
     sessionIndex: {
       type: Number,
+    },
+    deleteType: {
+      type: Array,
     }
   },
   components: {
@@ -48,7 +53,8 @@ export default {
       })
     },
     delType($index) {
-      this.typeData.splice($index, 1)
+      let deletedItem = this.typeData.splice($index, 1)[0]
+      if (deletedItem.typeLabelId) this.deleteType.push(deletedItem.typeLabelId)
     }
   },
 

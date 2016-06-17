@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- {{datalist|json}} -->
     <div class="page-header">
       <h4>不等位/待排队 <jo-loading :loading="$loadingAsyncData"></jo-loading></h4> {{searchData|json}}
     </div>

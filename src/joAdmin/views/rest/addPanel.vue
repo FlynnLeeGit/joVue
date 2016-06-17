@@ -3,7 +3,8 @@
     <modal :show.sync='show' :large='true' effect='fade' :callback='confirmAdd' title='添加餐厅'>
       <div slot='modal-body' class="modal-body">
         <jo-tabs>
-          {{addData|json}}
+          <!-- {{addData|json}}
+ -->
           <jo-tab header='餐厅信息'>
             <rest-info :data='addData'></rest-info>
           </jo-tab>

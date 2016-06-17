@@ -28,7 +28,6 @@ export default {
       type: String,
       required: true
     },
-
   },
   components: {
     joInput

@@ -1,13 +1,18 @@
 <template>
-  <modal effect='fade' :large='true' :show.sync='show' :title="isAdd?'添加面板':'编辑面板'" :callback='confirm'>
+  <modal effect='fade' :large='true' :show.sync='show' :callback='confirm'>
+    <div class="modal-header" slot='modal-header'>
+      <h4>{{isAdd?'添加面板':'编辑面板'}}
+        <jo-loading :loading='isAdd?confirmLoading:$loadingAsyncData'></jo-loading>
+      </h4>
+    </div>
     <div class="modal-body row" slot='modal-body'>
       <jo-tabs>
-        {{eventId}}
+        <!-- {{editData|json}} -->
         <jo-tab header='活动基本信息'>
           <event-info :data='editData' :mode='mode'></event-info>
         </jo-tab>
         <jo-tab header='活动场次'>
-          <event-session :session-data='editData.eventSessionLabel' :type='editData.type'></event-session>
+          <event-session :session-data='editData.eventSessionLabel' :delete-session='editData.deleteSessionId' :delete-type='editData.deleteTypeId' :type='editData.type'></event-session>
         </jo-tab>
         <jo-tab header='价格矩阵'>
           <event-price :price-data='editData.eventPriceList'></event-price>
@@ -20,7 +25,8 @@
 import {
   modal,
   joTabs,
-  joTab
+  joTab,
+  joLoading
 } from 'jo'
 import {
   v2EventService
@@ -35,6 +41,8 @@ export default {
     modal,
     joTabs,
     joTab,
+    joLoading,
+
     eventInfo,
     eventSession,
     eventPrice
@@ -59,11 +67,15 @@ export default {
   },
   data() {
     return {
+      confirmLoading: false,
       editData: {
         eventPriceList: [
           ['']
         ],
-        eventSessionLabel: []
+        eventSessionLabel: [],
+        // 需要删除的场次id和票型id 数组
+        deleteSessionId: [],
+        deleteTypeId: []
       }
     }
   },
@@ -78,23 +90,29 @@ export default {
   methods: {
     confirm() {
       if (this.isAdd) {
-        log('tianjia')
+        this.confirmLoading = true
         v2EventService.insertEvent(this.editData)
           .then(res => this.updateList('插入活动成功!'))
       }
       if (this.isEdit) {
-        log('edit')
+        this.confirmLoading = true
+        v2EventService.updateEvent(this.editData)
+          .then(res => this.updateList('更新数据成功!'))
       }
     },
     updateList(msg) {
       this.show = false
+      this.confirmLoading = false
       this.reloadList += 1
       this.$root.$emit('showAlert', msg)
     }
   },
   asyncData(resolve, reject) {
     if (this.isAdd) resolve()
-    if (this.isEdit) log('编辑下', this.eventId)
+    if (this.isEdit) v2EventService.getOneEvent(this.eventId)
+      .then(editData => resolve({
+        editData
+      }))
   }
 }
 </script>
